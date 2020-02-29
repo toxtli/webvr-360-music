@@ -33,7 +33,7 @@ def split_track(folder, track_name, out_path):
 
 # go through and run the split track on each track
 def split_song(folder):
-    out_path = "../%s" % (folder)
+    out_path = "%s" % (folder)
     print(folder)
     if not os.path.exists(out_path):
         os.makedirs(out_path)
