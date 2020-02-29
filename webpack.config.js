@@ -40,7 +40,7 @@
 		})
 		],*/
 		module: {
-			loaders: [
+			rules: [
 			{ test: /\.(glsl|vert|frag)$/, loader: 'shader-loader' },
 			{
 				test: /\.js$/,
