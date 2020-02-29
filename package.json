@@ -5,7 +5,11 @@
   "main": "index.html",
   "scripts": {
     "watch": "webpack -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack -p",
+    "start": "http-server",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "npm run predeploy && ghpages git@github.com:toxtli/webvr-360-music.git -p .ghpages && rm -rf .ghpages",
+    "predeploy": "npm run build && shx mkdir -p .ghpages && cp -r index.html build CNAME .ghpages"
   },
   "author": "Yotam Mann & Kyle Phillips",
   "license": "Apache-2.0",
