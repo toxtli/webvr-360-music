@@ -1,5 +1,6 @@
 node_modules
-
+server/songs
+server/pretrained_models
+server/output
 .DS_Store
-
 build
