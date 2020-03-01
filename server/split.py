@@ -32,8 +32,8 @@ def split_track(folder, track_name, out_path):
     os.remove(tmp_audio)
 
 # go through and run the split track on each track
-def split_song(folder):
-    out_path = "%s" % (folder)
+def split_song(folder, out_path):
+    #out_path = "%s" % (folder)
     print(folder)
     if not os.path.exists(out_path):
         os.makedirs(out_path)
@@ -43,5 +43,5 @@ def split_song(folder):
             split_track(folder, os.path.splitext(file)[0], out_path)
 
 if __name__ == "__main__":
-    split_song(sys.argv[1])
+    split_song(sys.argv[1], sys.argv[2])
 
