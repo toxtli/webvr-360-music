@@ -84,10 +84,10 @@ export const trackConfig = [
 		}
 	},
 	{
-		artist : 'raputin',
-		track : 'raputin',
-		folder : 'raputin',
-		intro : 'raputin',
+		artist : 'rasputin',
+		track : 'rasputin',
+		folder : 'rasputin',
+		intro : 'rasputin',
 		duration : 270,
 		segments: 9,
 		trackNames : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
