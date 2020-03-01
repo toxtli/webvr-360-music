@@ -48,12 +48,48 @@ export const trackConfig = [
 		}
 	},
 	{
-		artist : 'Alarm Will Sound',
-		track : 'Roadrunner',
+		artist : 'america',
+		track : 'america',
 		folder : 'song',
 		intro : 'song',
 		duration : 240,
 		segments: 8,
+		trackNames : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+		names : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+		soundRings: {
+			startColor: '#ffca7a',
+			endColor: '#cc3600',
+			size: 8
+		},
+		floor: {
+			color: '#cc3600'
+		}
+	},
+	{
+		artist : 'angel',
+		track : 'angel',
+		folder : 'angel',
+		intro : 'angel',
+		duration : 270,
+		segments: 9,
+		trackNames : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+		names : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+		soundRings: {
+			startColor: '#ffca7a',
+			endColor: '#cc3600',
+			size: 8
+		},
+		floor: {
+			color: '#cc3600'
+		}
+	},
+	{
+		artist : 'raputin',
+		track : 'raputin',
+		folder : 'raputin',
+		intro : 'raputin',
+		duration : 270,
+		segments: 9,
 		trackNames : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
 		names : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
 		soundRings: {
