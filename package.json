@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@ekolabs/aframe-spritesheet-component": "^1.2.0",
-    "aframe": "git://github.com/aframevr/aframe.git#fbf2bfb6fab727fb0f9a480292ea8ea0d808d5c6",
+    "aframe": "^0.6.1",
     "aframe-auto-detect-controllers-component": "^0.1.4",
     "aframe-controller-cursor-component": "^0.2.7",
     "aframe-gif-shader": "^0.2.0",
