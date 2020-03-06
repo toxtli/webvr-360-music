@@ -23,7 +23,7 @@ def main(args):
 	os.system(f"rm -fr {out_path}")
 	os.system(f"youtube-dl -x --audio-format mp3 -o {song_path} {url}")
 	os.system(f"spleeter separate -i {song_path} -p spleeter:5stems -o {temp_dir}")
-	duration = split_song(temp_dir, out_path)
+	duration = split_song(temp_path, out_path)
 	record = {
 		"artist": "Phoenix",
 		"track": "Ti Amo",
