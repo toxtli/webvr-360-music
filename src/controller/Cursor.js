@@ -89,7 +89,8 @@ AFRAME.registerComponent('mouse-cursor', {
         const distance = 0.1;
 
         const pos = cameraPosition.clone().add(dir.multiplyScalar(distance));
-
+        // console.log('POSITION');
+        // console.log(pos);
         //this.el.object3D.position.set(pos.x, pos.y, pos.z)
         this.el.setAttribute('position', `${pos.x} ${pos.y} ${pos.z}`)
 	}

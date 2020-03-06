@@ -7,13 +7,16 @@
     "watch": "webpack -w",
     "build": "webpack -p",
     "start": "http-server",
+    "restart": "npm run build && http-server",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "npm install && npm run build && http-server",
     "deploy": "npm run predeploy && ghpages git@github.com:toxtli/webvr-360-music.git -p .ghpages && rm -rf .ghpages",
     "predeploy": "npm run build && shx mkdir -p .ghpages && cp -r index.html build images audio CNAME .ghpages"
   },
   "author": "Yotam Mann & Kyle Phillips",
   "license": "Apache-2.0",
   "devDependencies": {
+    "aframe": "^0.6.1",
     "autoprefixer-loader": "^3.2.0",
     "babel-core": "^6.23.1",
     "babel-loader": "^6.3.0",
@@ -37,7 +40,6 @@
   },
   "dependencies": {
     "@ekolabs/aframe-spritesheet-component": "^1.2.0",
-    "aframe": "^0.6.1",
     "aframe-auto-detect-controllers-component": "^0.1.4",
     "aframe-controller-cursor-component": "^0.2.7",
     "aframe-gif-shader": "^0.2.0",

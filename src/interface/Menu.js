@@ -42,6 +42,8 @@ AFRAME.registerComponent('menu', {
 
 		let lastClick = Date.now()
 
+		let planes = [];
+
 		trackConfig.forEach((track, i) => {
 			const plane = document.createElement('a-entity')
 			plane.setAttribute('menu-item', {
@@ -94,11 +96,26 @@ AFRAME.registerComponent('menu', {
 					currentSelection = plane
 				}
 			})
+
+			planes.push(plane);
 		})
 
 		this.el.sceneEl.addEventListener('song-end', () => {
 			this.el.setAttribute('menu', 'shrink', false)
 		})
+
+		setTimeout(() => {
+			const songId = 1
+			const trackClone = {}
+			Object.assign(trackClone, trackConfig[songId])
+			this.el.emit('select', trackClone)
+			this.el.sceneEl.emit('menu-selection', trackClone)
+			if (currentSelection){
+				currentSelection.setAttribute('menu-item', 'selected', false)
+			}
+			planes[songId].setAttribute('menu-item', 'selected', true)
+			currentSelection = planes[songId]
+		}, 20000)
 	},
 
 	update(){
