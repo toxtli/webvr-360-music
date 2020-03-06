@@ -28,15 +28,15 @@ export const useVoiceOver = true
 export const supported = true; //Detector.webgl && Tone.supported
 export const trackConfig = [
 	{
-		artist : 'Phoenix',
-		track : 'Ti Amo',
-		folder : 'phoenix',
-		intro : 'phoenix',
-		segments : 1,
-		duration : 30,
+		artist : 'PLAY',
+		track : 'SONG',
+		folder : 'america',
+		intro : 'song',
+		segments : 8,
+		duration : 240,
 		// duration : 5,
-		trackNames : ['VOCALS', 'DRUMS', 'GUITARS', 'BASS', 'PERCUSSION', 'SYNTHS', 'FX'],
-		names : ['vocals', 'drums', 'guitars', 'bass', 'percussion', 'synths', 'fx'],
+		trackNames : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+		names : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
 		soundRings: {
 			startColor: '#f7002d',
 			endColor: '#00edaa',
@@ -46,61 +46,61 @@ export const trackConfig = [
 		floor: {
 			color: '#253934' //#263330'
 		}
-	},
-	{
-		artist : 'america',
-		track : 'america',
-		folder : 'song',
-		intro : 'song',
-		duration : 240,
-		segments: 8,
-		trackNames : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
-		names : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
-		soundRings: {
-			startColor: '#ffca7a',
-			endColor: '#cc3600',
-			size: 8
-		},
-		floor: {
-			color: '#cc3600'
-		}
-	},
-	{
-		artist : 'angel',
-		track : 'angel',
-		folder : 'angel',
-		intro : 'angel',
-		duration : 270,
-		segments: 9,
-		trackNames : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
-		names : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
-		soundRings: {
-			startColor: '#ffca7a',
-			endColor: '#cc3600',
-			size: 8
-		},
-		floor: {
-			color: '#cc3600'
-		}
-	},
-	{
-		artist : 'rasputin',
-		track : 'rasputin',
-		folder : 'rasputin',
-		intro : 'rasputin',
-		duration : 270,
-		segments: 9,
-		trackNames : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
-		names : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
-		soundRings: {
-			startColor: '#ffca7a',
-			endColor: '#cc3600',
-			size: 8
-		},
-		floor: {
-			color: '#cc3600'
-		}
-	},
+	}
+	// {
+	// 	artist : 'america',
+	// 	track : 'america',
+	// 	folder : 'song',
+	// 	intro : 'song',
+	// 	duration : 240,
+	// 	segments: 8,
+	// 	trackNames : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+	// 	names : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+	// 	soundRings: {
+	// 		startColor: '#ffca7a',
+	// 		endColor: '#cc3600',
+	// 		size: 8
+	// 	},
+	// 	floor: {
+	// 		color: '#cc3600'
+	// 	}
+	// },
+	// {
+	// 	artist : 'angel',
+	// 	track : 'angel',
+	// 	folder : 'angel',
+	// 	intro : 'angel',
+	// 	duration : 270,
+	// 	segments: 9,
+	// 	trackNames : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+	// 	names : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+	// 	soundRings: {
+	// 		startColor: '#ffca7a',
+	// 		endColor: '#cc3600',
+	// 		size: 8
+	// 	},
+	// 	floor: {
+	// 		color: '#cc3600'
+	// 	}
+	// },
+	// {
+	// 	artist : 'rasputin',
+	// 	track : 'rasputin',
+	// 	folder : 'rasputin',
+	// 	intro : 'rasputin',
+	// 	duration : 270,
+	// 	segments: 9,
+	// 	trackNames : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+	// 	names : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+	// 	soundRings: {
+	// 		startColor: '#ffca7a',
+	// 		endColor: '#cc3600',
+	// 		size: 8
+	// 	},
+	// 	floor: {
+	// 		color: '#cc3600'
+	// 	}
+	// },
 	// {
 	// 	artist : 'Alarm Will Sound',
 	// 	track : 'Roadrunner',
@@ -201,6 +201,29 @@ export const trackConfig = [
 
 
 export function getTrackData(artist){
-	const index = trackConfig.findIndex(t => t.artist === artist)
-	return trackConfig[index]
+	// const index = trackConfig.findIndex(t => t.artist === artist)
+	// return trackConfig[index]
+	let hash = location.hash.substr(1)
+	let parts = hash.split(',')
+	let duration = parseInt(parts[1])
+	return {
+		artist : 'PLAY',
+		track : 'SONG',
+		folder : parts[0],
+		intro : 'song',
+		segments : parseInt(duration/30),
+		duration : duration,
+		// duration : 5,
+		trackNames : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+		names : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+		soundRings: {
+			startColor: '#f7002d',
+			endColor: '#00edaa',
+			shape: 'triangle',
+			size: 8
+		},
+		floor: {
+			color: '#253934' //#263330'
+		}
+	}
 }

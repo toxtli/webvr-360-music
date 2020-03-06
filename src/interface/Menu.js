@@ -27,6 +27,10 @@ AFRAME.registerComponent('menu', {
 		}
 	},
 
+	open(){
+
+	},
+
 	init(){
 
 		if (!supported){
@@ -104,18 +108,41 @@ AFRAME.registerComponent('menu', {
 			this.el.setAttribute('menu', 'shrink', false)
 		})
 
-		setTimeout(() => {
-			const songId = 1
-			const trackClone = {}
-			Object.assign(trackClone, trackConfig[songId])
-			this.el.emit('select', trackClone)
-			this.el.sceneEl.emit('menu-selection', trackClone)
+		this.open = () => {
+			const songId = 0
+			let hash = location.hash.substr(1)
+			let parts = hash.split(',')
+			let duration = parseInt(parts[1])
+			trackConfig[0] = {
+				artist : 'PLAY',
+				track : 'SONG',
+				folder : parts[0],
+				intro : 'song',
+				segments : parseInt(duration/30),
+				duration : duration,
+				// duration : 5,
+				trackNames : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+				names : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+				soundRings: {
+					startColor: '#f7002d',
+					endColor: '#00edaa',
+					shape: 'triangle',
+					size: 8
+				},
+				floor: {
+					color: '#253934' //#263330'
+				}
+			}
+			this.el.emit('select', trackConfig[0])
+			this.el.sceneEl.emit('menu-selection', trackConfig[0])
 			if (currentSelection){
 				currentSelection.setAttribute('menu-item', 'selected', false)
 			}
 			planes[songId].setAttribute('menu-item', 'selected', true)
 			currentSelection = planes[songId]
-		}, 20000)
+		}
+
+		setTimeout(this.open, 5000)
 	},
 
 	update(){
