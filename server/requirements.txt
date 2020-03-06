@@ -7,3 +7,5 @@ Flask == 1.0.2
 # app.py: 9
 # split.py: 1
 pydub == 0.23.0
+
+youtube-dl
