@@ -1,5 +1,6 @@
 build
 .DS_Store
+server/back
 server/songs
 server/output
 server/spleeter
@@ -8,6 +9,7 @@ server/pretrained_models
 server/.env
 server/credentials.json
 server/token.pickle
+audio/*
 
 # Logs
 logs
