@@ -5,6 +5,9 @@ server/output
 server/spleeter
 server/processed
 server/pretrained_models
+server/.env
+server/credentials.json
+server/token.pickle
 
 # Logs
 logs
