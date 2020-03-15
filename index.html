@@ -130,7 +130,7 @@
 		<canvas id="splash-canvas"></canvas>
 		<div id="splash-container">
 			<h1 id="title">INSIDE MUSIC</h1>
-			<p id="featuring">featuring</p>
+			<p id="featuring">Addapted by Carlos Toxtli</p>
 			<div id="bands">
 				<span>
 					Youtube URL
@@ -141,6 +141,14 @@
 				<span>
 					<button id="sendButton">transform</button>
 				</span>
+				<br>
+				<button id="yoyo_550" class="song">YOYO</button>
+				<button id="FjAe4BTegho_210" class="song">HACHA</button>
+				<button id="M8GlWPkzWsA_240" class="song">BOYS</button>
+				<button id="angel_270" class="song">ANGEL</button>
+				<button id="1Qvb-fhwx1E_210" class="song">ALEKS</button>
+				<button id="LMepD5Wp7H0_210" class="song">METAL</button>
+				
 			</div>
 
 			<div id="enter-vr-container" style="color: #ffffff">
@@ -150,7 +158,7 @@
 
 		</div>
 
-		<div id="badges">
+		<div id="badges" hidden>
 			<a href="https://webvrexperiments.com/" target="_blank">
 				<img src="./images/webVR_experiment@3x.png" class="badge">
 			</a>
@@ -232,14 +240,42 @@
 	<script>
 		document.getElementById('enter-vr-container').style.visibility = 'hidden';
 		setTimeout(()=>{
-		let hash = location.hash.substr(1);
-		if (hash) {
-			
-			document.querySelector('.webvr-ui-button').click();
-		} else {
-			document.getElementById('enter-vr-container').style.visibility = 'hidden';
+			let hash = location.hash.substr(1);
+			if (hash) {
+				document.getElementById('enter-vr-container').style.visibility = 'visible';
+				//document.querySelector('.webvr-ui-button').click();
+			} else {
+				//document.getElementById('enter-vr-container').style.visibility = 'hidden';
+			}
+		}, 6000);
+
+		document.getElementById('sendButton').addEventListener('click', () => {
+			var serverUrl = 'http://127.0.0.1:5000/?url=';
+			var youtubeUrl = document.getElementById('url').value;
+			serverUrl += encodeURI(youtubeUrl);
+			fetch(serverUrl)
+				.then((response) => {
+			    return response.json();
+			  })
+			  .then((data) => {
+					console.log(data);
+					if (data.status == 'OK') {
+						console.log(data);
+						var hashUrl = '/#'+ data.message.folder + "," + data.message.duration;
+						window.location.href = hashUrl;
+						location.reload();
+					}
+			  });
+		});
+
+		let songs = document.querySelectorAll('.song');
+		for (let song of songs) {
+			song.addEventListener('click', ()=>{
+				var hashUrl = '/#'+ song.id.replace('_',',');
+				window.location.href = hashUrl;
+				location.reload();
+			});
 		}
-		}, 3000);
 	</script>
 </body>
 </html>

@@ -72,9 +72,9 @@ AFRAME.registerComponent('menu', {
 
 			const angle = 8
 			if (i === 0 || i === 3){
-				plane.setAttribute('rotation', `0 ${angle} 0`)	
+				plane.setAttribute('rotation', `0 ${angle} 0`)
 			} else if (i === 2 || i === 5){
-				plane.setAttribute('rotation', `0 ${-angle} 0`)	
+				plane.setAttribute('rotation', `0 ${-angle} 0`)
 			}
 
 			//unselect the previous track
@@ -142,7 +142,9 @@ AFRAME.registerComponent('menu', {
 			currentSelection = planes[songId]
 		}
 
-		setTimeout(this.open, 5000)
+    if (location.hash.substr(1)) {
+      setTimeout(this.open, 10000)  
+    }
 	},
 
 	update(){

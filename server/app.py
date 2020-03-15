@@ -1,54 +1,91 @@
 import os
 import sys
 import json
+import glob
+import pickle
 import random
 import string
+import os.path
 import tempfile
 import argparse
+from flask_cors import CORS
 from os.path import basename
+from dotenv import load_dotenv
 from pydub import AudioSegment
 from flask import Flask, request
+import urllib.parse as urlparse
+from urllib.parse import parse_qs
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaFileUpload
+from google.auth.transport.requests import Request
+from google_auth_oauthlib.flow import InstalledAppFlow
 
 app = Flask(__name__)
+CORS(app)
+upload_to_drive = True
+#do not forget to have a .env file in this path with the environmental variables set.
+if upload_to_drive:
+	load_dotenv()
+	DRIVE_PARENT_FOLDER = os.environ.get('DRIVE_PARENT_FOLDER')
+	SCOPES = ['https://www.googleapis.com/auth/drive']
 
 def main(args):
-	name = args['name']
 	url = args['url']
-	temp_dir = "processed"
-	song_path = f"songs/{name}.mp3"
-	temp_path = f"{temp_dir}/{name}"
-	out_path = f"../audio/{name}"
-	os.system(f"rm {song_path}")
-	os.system(f"rm -fr {temp_path}")
-	os.system(f"rm -fr {out_path}")
-	os.system(f"youtube-dl -x --audio-format mp3 -o {song_path} {url}")
-	os.system(f"spleeter separate -i {song_path} -p spleeter:5stems -o {temp_dir}")
-	duration = split_song(temp_path, out_path)
-	record = {
-		"artist": "Phoenix",
-		"track": "Ti Amo",
-		"folder": name,
-		"intro": "phoenix",
-		"segments": int(duration/30),
-		"duration": duration,
-		"trackNames": ["bass", "drums", "piano", "null", "vocals", "other", "null"],
-		"names": ["bass", "drums", "piano", "null", "vocals", "other", "null"],
-		"soundRings": {
-			"startColor": '#f7002d',
-			"endColor": '#00edaa',
-			"shape": 'triangle',
-			"size": 8
-		},
-		"floor": {
-			"color": "#253934"
+	# if args['nodrive']:
+	# 	upload_to_drive = False
+	parsed = urlparse.urlparse(url)
+	params = parse_qs(parsed.query)
+	if 'v' in params:
+		name = params['v'][0]
+		url = args['url']
+		song_name = "_song.mp3"
+		song_dir = "songs"
+		temp_dir = "processed"
+		out_dir = "../audio"
+		song_path = f"{song_dir}/{name}.mp3"
+		temp_path = f"{temp_dir}/{name}"
+		out_path = f"{out_dir}/{name}"
+		out_song = f"{out_path}/{song_name}"
+		if not os.path.exists(song_dir):
+			os.system(f"mkdir {song_dir}")
+			os.system(f"mkdir {temp_dir}")
+		if not os.path.exists(out_song):
+			os.system(f"youtube-dl -x --audio-format mp3 -o {song_path} {url}")
+			os.system(f"spleeter separate -i {song_path} -p spleeter:5stems -o {temp_dir}")
+			duration = split_song(temp_path, out_path)
+			os.system(f"mv {song_path} {out_path}/{song_name}")
+			os.system(f"rm -fr {temp_path}")
+		else:
+			duration = get_duration(out_path)
+		record = {
+			"artist": "PLAY",
+			"track": "SONG",
+			"folder": name,
+			"intro": "song",
+			"segments": int(duration/30),
+			"duration": duration,
+			"trackNames": ["bass", "drums", "piano", "null", "vocals", "other", "null"],
+			"names": ["bass", "drums", "piano", "null", "vocals", "other", "null"],
+			"soundRings": {
+				"startColor": '#f7002d',
+				"endColor": '#00edaa',
+				"shape": 'triangle',
+				"size": 8
+			},
+			"floor": {
+				"color": "#253934"
+			}
 		}
-	}
-	return record
-
-
+		if upload_to_drive:
+			upload_folder(name)
+		return {'status':'OK', 'message':record}
+	return {'status':'ERROR', 'message':'The video ID is missing'}
 
 def tmp_wav():
     return (''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))) + ".wav"
+
+def get_duration(out_path):
+	return int(len(os.listdir(out_path))/5) * 30
 
 # split the track up in 30 second segments
 def split_track(folder, track_name, out_path):
@@ -87,15 +124,75 @@ def split_song(folder, out_path):
             duration = split_track(folder, os.path.splitext(file)[0], out_path)
     return duration
 
+def google_login():
+    creds = None
+    if os.path.exists('token.pickle'):
+        with open('token.pickle', 'rb') as token:
+            creds = pickle.load(token)
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                'credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open('token.pickle', 'wb') as token:
+            pickle.dump(creds, token)
+    service = build('drive', 'v3', credentials=creds)
+    return service
+
+def folder_exists(service, dir_name):
+	query = f"""name='{dir_name}' and 
+				mimeType='application/vnd.google-apps.folder' and 
+				'{DRIVE_PARENT_FOLDER}' in parents and 
+				trashed = false"""
+	response = service.files().list(
+	    q = query,
+	    spaces='drive'
+	).execute()
+	folders = response.get('files', [])
+	return (len(folders) > 0)
+
+def upload_folder(dir_name):
+	folder = '../audio'
+	folder_path = os.path.join(folder, dir_name)
+	service = google_login()
+	if not folder_exists(service, dir_name):
+		print('The folder does not exist')
+		body = {
+			'name': dir_name,
+			'mimeType': "application/vnd.google-apps.folder",
+			'parents': [DRIVE_PARENT_FOLDER]
+		}
+		inserted_folder = service.files().create(body = body).execute()
+		new_parent = inserted_folder['id']
+		files = os.listdir(folder_path)
+		for file in files:
+			file_metadata = {
+				'name': file,
+				'parents': [new_parent]
+			}
+			media = MediaFileUpload(os.path.join(folder_path, file))
+			file_drive = service.files().create(body=file_metadata,
+                                    			media_body=media,
+                                    			fields='id').execute()
+			print(file_drive)
+	else:
+		print('The folder already exists')
+
 @app.route('/', methods=['GET'])
 def index():
-	result = main(request.args)
-	return json.dumps(result)
+	if request.args:
+		result = main(request.args)
+		print(result)
+		return json.dumps(result)
+	return json.dumps({'status':'ERROR', 'message':'No parameters were given'})
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--name')
 	parser.add_argument('--url')
+	#parser.add_argument('--nodrive', action='store_false')
 	args = parser.parse_args()
 	result = main(vars(args))
 	print(result)

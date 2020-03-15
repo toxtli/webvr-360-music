@@ -121,7 +121,9 @@ export class StreamingPlayer extends events.EventEmitter {
 	}
 
 	trackName(){
-		return `./audio/${this.folder}/${this.track}-${this.segment}.[mp3|ogg]`
+		//let audioPath = './audio'
+		let audioPath = 'http://demos.hcilab.ml/audio'
+		return `${audioPath}/${this.folder}/${this.track}-${this.segment}.[mp3|ogg]`
 	}
 
 	getWaveform(array){

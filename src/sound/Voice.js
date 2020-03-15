@@ -29,6 +29,7 @@ export class Voice extends events.EventEmitter{
 		this._playedLoading = false
 
 		const voFolder = './audio/vo'
+		const voServer = 'http://demos.hcilab.ml/audio'
 
 		this._players = new Players().toMaster()
 		this._players.fadeOut = 0.5
@@ -40,8 +41,12 @@ export class Voice extends events.EventEmitter{
 			}
 		})
 
-		this._players.add('experience', `${voFolder}/intro.[mp3|ogg]`)
-		this._players.add('loading', `${voFolder}/loading.[mp3|ogg]`)
+		//this._players.add('experience', `${voFolder}/intro.[mp3|ogg]`)
+		//this._players.add('experience', `https://drive.google.com/uc?export=download&id=1DexhEJ656ejRu4Uy5lwFWY4Z7S0sNQ8O`)
+		//this._players.add('experience', `https://drive.google.com/uc?id=1DexhEJ656ejRu4Uy5lwFWY4Z7S0sNQ8O`)
+		this._players.add('experience', `${voServer}/intro.mp3`)
+		this._players.add('loading', `${voServer}/loading.mp3`)
+		//this._players.add('loading', `${voFolder}/loading.[mp3|ogg]`)
 
 		this._id = -1
 	}
