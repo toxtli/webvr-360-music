@@ -147,12 +147,15 @@ def folder_exists(service, dir_name):
 				mimeType='application/vnd.google-apps.folder' and 
 				'{DRIVE_PARENT_FOLDER}' in parents and 
 				trashed = false"""
-	response = service.files().list(
-	    q = query,
-	    spaces='drive'
-	).execute()
-	folders = response.get('files', [])
-	return (len(folders) > 0)
+	try:
+		response = service.files().list(
+		    q = query,
+		    spaces='drive'
+		).execute()
+		folders = response.get('files', [])
+		return (len(folders) > 0)
+	except:
+		return False
 
 def upload_folder(dir_name):
 	folder = '../audio'
