@@ -89,12 +89,12 @@ def main(args):
 	return {'status':'ERROR', 'message':'The video ID is missing'}
 
 def store_catalog(metadata):
-	data_obj = {
-		"id": metadata['_ydl_info']['id'],
-		"title": metadata['_ydl_info']['title'],
-		"duration": metadata['_ydl_info']['duration'],
-		"thumb": metadata['_ydl_info']['thumbnail']
-	}
+	data_obj = [
+		metadata['_ydl_info']['id'],
+		metadata['_ydl_info']['title'],
+		metadata['_ydl_info']['duration'],
+		metadata['_ydl_info']['thumbnail']
+	]
 	data_str = quote(json.dumps(data_obj))
 	url = f"{CATALOG_SERVER}?a=store&q={data_str}"
 	r = requests.get(url)
