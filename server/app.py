@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import glob
+import pafy
 import pickle
 import random
 import string
@@ -50,6 +51,7 @@ def main(args):
 			os.system(f"mkdir {song_dir}")
 			os.system(f"mkdir {temp_dir}")
 		if not os.path.exists(out_song):
+			store_metadata(url, out_path)
 			os.system(f"youtube-dl -x --audio-format mp3 -o {song_path} {url}")
 			os.system(f"spleeter separate -i {song_path} -p spleeter:5stems -o {temp_dir}")
 			duration = split_song(temp_path, out_path)
@@ -80,6 +82,13 @@ def main(args):
 			upload_folder(name)
 		return {'status':'OK', 'message':record}
 	return {'status':'ERROR', 'message':'The video ID is missing'}
+
+def store_metadata(url, out_path):
+	metadata = pafy.new(url)
+	metadata_dict = vars(metadata)
+	print(metadata_dict)
+	with open(f'{out_path}/metadata.json', 'w') as f:
+		json.dump(metadata_dict, f)
 
 def tmp_wav():
     return (''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))) + ".wav"
