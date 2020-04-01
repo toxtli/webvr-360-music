@@ -21,3 +21,4 @@ google-auth-httplib2
 google-auth-oauthlib
 # spleeter
 pafy
+requests
