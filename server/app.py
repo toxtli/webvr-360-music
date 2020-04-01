@@ -224,7 +224,11 @@ def index():
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--url')
+	parser.add_argument('--web', action='store_true')
 	#parser.add_argument('--nodrive', action='store_false')
 	args = parser.parse_args()
-	result = main(vars(args))
-	print(result)
+	if not args.web:
+		result = main(vars(args))
+		print(result)
+	else:
+		app.run(host='0.0.0.0', port=4000)
