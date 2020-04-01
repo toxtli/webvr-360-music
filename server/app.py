@@ -107,7 +107,7 @@ def store_metadata(url, out_path):
 	with open(f'{out_path}/metadata.json', 'w') as f:
 		json.dump(metadata_dict, f)
 	if store_in_catalog:
-		store_catalog(metadata)
+		store_catalog(metadata_dict)
 
 def tmp_wav():
     return (''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))) + ".wav"
