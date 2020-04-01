@@ -51,10 +51,10 @@ def main(args):
 			os.system(f"mkdir {song_dir}")
 			os.system(f"mkdir {temp_dir}")
 		if not os.path.exists(out_song):
-			store_metadata(url, out_path)
 			os.system(f"youtube-dl -x --audio-format mp3 -o {song_path} {url}")
 			os.system(f"spleeter separate -i {song_path} -p spleeter:5stems -o {temp_dir}")
 			duration = split_song(temp_path, out_path)
+			store_metadata(url, out_path)
 			os.system(f"mv {song_path} {out_path}/{song_name}")
 			os.system(f"rm -fr {temp_path}")
 		else:
