@@ -14,6 +14,7 @@ from os.path import basename
 from dotenv import load_dotenv
 from pydub import AudioSegment
 from flask import Flask, request
+from urllib.parse import quote
 import urllib.parse as urlparse
 from urllib.parse import parse_qs
 from googleapiclient.discovery import build
@@ -24,11 +25,14 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 app = Flask(__name__)
 CORS(app)
 upload_to_drive = True
+store_in_catalog = True
 #do not forget to have a .env file in this path with the environmental variables set.
 if upload_to_drive:
 	load_dotenv()
 	DRIVE_PARENT_FOLDER = os.environ.get('DRIVE_PARENT_FOLDER')
 	SCOPES = ['https://www.googleapis.com/auth/drive']
+if store_in_catalog:
+	CATALOG_SERVER = os.environ.get('CATALOG_SERVER')
 
 def main(args):
 	url = args['url']
@@ -83,12 +87,27 @@ def main(args):
 		return {'status':'OK', 'message':record}
 	return {'status':'ERROR', 'message':'The video ID is missing'}
 
+def store_catalog(metadata):
+	data_obj = {
+		"id": metadata['_ydl_info']['id'],
+		"title": metadata['_ydl_info']['title'],
+		"duration": metadata['_ydl_info']['duration'],
+		"thumb": metadata['_ydl_info']['thumbnail']
+	}
+	data_str = quote(json.dumps(data_obj))
+	url = f"{CATALOG_SERVER}?a=store&q={data_str}"
+	r = requests.get(url)
+	print(r.status_code)
+	return r.status_code
+
 def store_metadata(url, out_path):
 	metadata = pafy.new(url)
 	metadata_dict = vars(metadata)
 	print(metadata_dict)
 	with open(f'{out_path}/metadata.json', 'w') as f:
 		json.dump(metadata_dict, f)
+	if store_in_catalog:
+		store_catalog(metadata)
 
 def tmp_wav():
     return (''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))) + ".wav"
