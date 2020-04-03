@@ -87,7 +87,7 @@ def store_catalog(metadata):
 def store_metadata(url, out_path):
 	metadata = pafy.new(url)
 	metadata_dict = vars(metadata)
-	print(metadata_dict)
+	#print(metadata_dict)
 	with open(f'{out_path}/metadata.json', 'w') as f:
 		json.dump(metadata_dict, f)
 	if store_in_catalog:
@@ -171,6 +171,7 @@ def folder_exists(service, dir_name):
 		return False
 
 def upload_folder(dir_name):
+	print("UPLOADING_FILES")
 	folder = '../audio'
 	folder_path = os.path.join(folder, dir_name)
 	service = google_login()
@@ -194,7 +195,7 @@ def upload_folder(dir_name):
 			file_drive = service.files().create(body=file_metadata,
                                     			media_body=media,
                                     			fields='id').execute()
-			print(file_drive)
+			#print(file_drive)
 			os.remove(file_path)
 	else:
 		print('The folder already exists')
