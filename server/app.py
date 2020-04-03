@@ -92,7 +92,7 @@ def store_metadata(url, out_path):
 		json.dump(metadata_dict, f)
 	if store_in_catalog:
 		store_catalog(metadata_dict)
-	return f"/#{metadata_dict['_ydl_info']['id']},{metadata['_ydl_info']['duration']}"
+	return f"/#{metadata_dict['_ydl_info']['id']},{metadata_dict['_ydl_info']['duration']}"
 
 def tmp_wav():
     return (''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))) + ".wav"
