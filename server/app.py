@@ -44,6 +44,7 @@ def main(args):
 	if 'v' in params:
 		name = params['v'][0]
 		url = args['url']
+		output = ""
 		song_name = "_song.mp3"
 		song_dir = "songs"
 		temp_dir = "processed"
@@ -59,33 +60,15 @@ def main(args):
 			os.system(f"youtube-dl -x --audio-format mp3 -o {song_path} {url}")
 			os.system(f"spleeter separate -i {song_path} -p spleeter:5stems -o {temp_dir}")
 			duration = split_song(temp_path, out_path)
-			store_metadata(url, out_path)
+			output = store_metadata(url, out_path)
 			os.system(f"mv {song_path} {out_path}/{song_name}")
 			os.system(f"rm -fr {temp_path}")
 		else:
 			duration = get_duration(out_path)
-		record = {
-			"artist": "PLAY",
-			"track": "SONG",
-			"folder": name,
-			"intro": "song",
-			"segments": int(duration/30),
-			"duration": duration,
-			"trackNames": ["bass", "drums", "piano", "null", "vocals", "other", "null"],
-			"names": ["bass", "drums", "piano", "null", "vocals", "other", "null"],
-			"soundRings": {
-				"startColor": '#f7002d',
-				"endColor": '#00edaa',
-				"shape": 'triangle',
-				"size": 8
-			},
-			"floor": {
-				"color": "#253934"
-			}
-		}
+			output = f"/#{name},{duration}"
 		if upload_to_drive:
 			upload_folder(name)
-		return {'status':'OK', 'message':record}
+		return {'status':'OK', 'message':output}
 	return {'status':'ERROR', 'message':'The video ID is missing'}
 
 def store_catalog(metadata):
@@ -109,6 +92,7 @@ def store_metadata(url, out_path):
 		json.dump(metadata_dict, f)
 	if store_in_catalog:
 		store_catalog(metadata_dict)
+	return f"/#{metadata_dict['_ydl_info']['id']},{metadata['_ydl_info']['duration']}"
 
 def tmp_wav():
     return (''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))) + ".wav"
@@ -205,11 +189,13 @@ def upload_folder(dir_name):
 				'name': file,
 				'parents': [new_parent]
 			}
-			media = MediaFileUpload(os.path.join(folder_path, file))
+			file_path = os.path.join(folder_path, file)
+			media = MediaFileUpload(file_path)
 			file_drive = service.files().create(body=file_metadata,
                                     			media_body=media,
                                     			fields='id').execute()
 			print(file_drive)
+			os.remove(file_path)
 	else:
 		print('The folder already exists')
 

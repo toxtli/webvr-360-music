@@ -121,8 +121,8 @@ AFRAME.registerComponent('menu', {
 				segments : parseInt(duration/30),
 				duration : duration,
 				// duration : 5,
-				trackNames : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
-				names : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+				trackNames : ['other', 'piano', 'drums', 'null', 'vocals', 'null', 'bass'],
+				names : ['other', 'piano', 'drums', 'null', 'vocals', 'null', 'bass'],
 				soundRings: {
 					startColor: '#f7002d',
 					endColor: '#00edaa',

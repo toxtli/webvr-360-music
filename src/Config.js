@@ -25,7 +25,7 @@ export const tubeColor = '#ffffff'
 export const title = 'Inside Music'
 export const trackRadius = 2
 export const useVoiceOver = true
-export const supported = true; //Detector.webgl && Tone.supported
+export const supported = true; //Detector.webgl && Tone.supporte
 export const trackConfig = [
 	{
 		artist : 'PLAY',
@@ -35,8 +35,8 @@ export const trackConfig = [
 		segments : 8,
 		duration : 240,
 		// duration : 5,
-		trackNames : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
-		names : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+		trackNames : ['other', 'piano', 'drums', 'null', 'vocals', 'null', 'bass'],
+		names : ['other', 'piano', 'drums', 'null', 'vocals', 'null', 'bass'],
 		soundRings: {
 			startColor: '#f7002d',
 			endColor: '#00edaa',
@@ -214,8 +214,8 @@ export function getTrackData(artist){
 		segments : parseInt(duration/30),
 		duration : duration,
 		// duration : 5,
-		trackNames : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
-		names : ['bass', 'drums', 'piano', 'null', 'vocals', 'other', 'null'],
+		trackNames : ['other', 'piano', 'drums', 'null', 'vocals', 'null', 'bass'],
+		names : ['other', 'piano', 'drums', 'null', 'vocals', 'null', 'bass'],
 		soundRings: {
 			startColor: '#f7002d',
 			endColor: '#00edaa',

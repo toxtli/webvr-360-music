@@ -142,13 +142,8 @@
 					<button id="sendButton">transform</button>
 				</span>
 				<br>
-				<button id="yoyo_550" class="song">YOYO</button>
-				<button id="FjAe4BTegho_210" class="song">HACHA</button>
-				<button id="M8GlWPkzWsA_240" class="song">BOYS</button>
-				<button id="angel_270" class="song">ANGEL</button>
-				<button id="1Qvb-fhwx1E_210" class="song">ALEKS</button>
-				<button id="LMepD5Wp7H0_210" class="song">METAL</button>
-				
+				<select id="songsList"></select>
+				<button id="selectSong">LOAD</button>
 			</div>
 
 			<div id="enter-vr-container" style="color: #ffffff">
@@ -250,7 +245,7 @@
 		}, 6000);
 
 		document.getElementById('sendButton').addEventListener('click', () => {
-			var serverUrl = 'http://127.0.0.1:5000/?url=';
+			var serverUrl = 'http://pc.hcilab.ml:4000/?url=';
 			var youtubeUrl = document.getElementById('url').value;
 			serverUrl += encodeURI(youtubeUrl);
 			fetch(serverUrl)
@@ -268,14 +263,41 @@
 			  });
 		});
 
-		let songs = document.querySelectorAll('.song');
-		for (let song of songs) {
-			song.addEventListener('click', ()=>{
-				var hashUrl = '/#'+ song.id.replace('_',',');
-				window.location.href = hashUrl;
-				location.reload();
-			});
-		}
+		document.getElementById('selectSong').addEventListener('click', () => {
+			var select = document.getElementById('songsList');
+			var hashUrl = '/#'+ select.value;
+			window.location.href = hashUrl;
+			location.reload();
+		});
+
+		(function() {
+			var select = document.getElementById('songsList');
+			var serverUrl = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=read&q={}';
+			fetch(serverUrl)
+			    .then((response) => {
+			        return response.json();
+			    })
+			    .then((data) => {
+					if (data.status == 'OK') {
+						var values = data.value;
+						for (var row of values) {
+							var opt = document.createElement('option');
+						    opt.value = row[0] + ',' + row[2];
+						    opt.innerHTML = row[1];
+						    select.appendChild(opt);
+						}
+					}
+			  });
+		})();
+
+		// let songs = document.querySelectorAll('.song');
+		// for (let song of songs) {
+		// 	song.addEventListener('click', ()=>{
+		// 		var hashUrl = '/#'+ song.id.replace('_',',');
+		// 		window.location.href = hashUrl;
+		// 		location.reload();
+		// 	});
+		// }
 	</script>
 </body>
 </html>
