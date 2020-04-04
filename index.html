@@ -245,9 +245,12 @@
 		}, 6000);
 
 		document.getElementById('sendButton').addEventListener('click', () => {
-			var serverUrl = 'http://pc.hcilab.ml:4000/?url=';
+			console.log('PROCESSING SONG');
+			var serverUrl = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=queue&q=';
 			var youtubeUrl = document.getElementById('url').value;
-			serverUrl += encodeURI(youtubeUrl);
+			var urlArr = [youtubeUrl];
+			//serverUrl += encodeURI(youtubeUrl);
+			serverUrl += encodeURI(JSON.stringify(urlArr));
 			fetch(serverUrl)
 				.then((response) => {
 			    return response.json();
@@ -256,8 +259,7 @@
 					console.log(data);
 					if (data.status == 'OK') {
 						console.log(data);
-						var hashUrl = '/#'+ data.message.folder + "," + data.message.duration;
-						window.location.href = hashUrl;
+						window.location.href = data.message;
 						location.reload();
 					}
 			  });
@@ -272,7 +274,7 @@
 
 		(function() {
 			var select = document.getElementById('songsList');
-			var serverUrl = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=read&q={}';
+			var serverUrl = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=read&q=songs';
 			fetch(serverUrl)
 			    .then((response) => {
 			        return response.json();
