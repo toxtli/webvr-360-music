@@ -69,7 +69,7 @@ def main(args):
 			os.system(f"mkdir {paths["song_dir"]}")
 			os.system(f"mkdir {paths["temp_dir"]}")
 		if not os.path.exists(paths["out_song"]):
-			if 'webhook' in args:
+			if 'webhook' in args and args['webhook'] is not None:
 				r = requests.get(args['webhook'])
 			song_processing(paths)
 		else:
