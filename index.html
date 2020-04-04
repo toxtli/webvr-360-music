@@ -139,6 +139,9 @@
 					<input type="text" id="url" name="url">
 				</span>
 				<span>
+					<input type="text" id="email" name="email">
+				</span>
+				<span>
 					<button id="sendButton">transform</button>
 				</span>
 				<br>
@@ -249,6 +252,10 @@
 			var serverUrl = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=queue&q=';
 			var youtubeUrl = document.getElementById('url').value;
 			var urlArr = [youtubeUrl];
+			var email = document.getElementById('email').value;
+			if (email) {
+				urlArr.push(email);
+			}
 			//serverUrl += encodeURI(youtubeUrl);
 			serverUrl += encodeURI(JSON.stringify(urlArr));
 			fetch(serverUrl)

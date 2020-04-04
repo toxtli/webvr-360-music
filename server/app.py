@@ -76,6 +76,13 @@ def main(args):
 				webhook += '&o=' + quote(output)
 				r = requests.get(webhook)
 				print(r.text)
+			elif 'email' in args and args['email'] is not None:
+				email = args['email']
+				email_params = [email, output]
+				url_email = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=email&q='
+				url_email += quote(json.dumps(email_params))
+				r = requests.get(url_email)
+				print(r.text)
 		else:
 			duration = get_duration(paths["out_path"])
 			output = f'/#{paths["name"]},{duration}'
