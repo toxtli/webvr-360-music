@@ -258,6 +258,7 @@
 			}
 			//serverUrl += encodeURI(youtubeUrl);
 			serverUrl += encodeURI(JSON.stringify(urlArr));
+			console.log(serverUrl);
 			fetch(serverUrl)
 				.then((response) => {
 			    return response.json();
@@ -266,7 +267,7 @@
 					console.log(data);
 					if (data.status == 'OK') {
 						console.log(data);
-						window.location.href = data.message;
+						window.location.href = data.value;
 						location.reload();
 					}
 			  });

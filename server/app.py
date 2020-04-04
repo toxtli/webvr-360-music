@@ -86,8 +86,8 @@ def main(args):
 		else:
 			duration = get_duration(paths["out_path"])
 			output = f'/#{paths["name"]},{duration}'
-		return {'status':'OK', 'message':output}
-	return {'status':'ERROR', 'message':'The video ID is missing'}
+		return {'status':'OK', 'value':output}
+	return {'status':'ERROR', 'value':'The video ID is missing'}
 
 def store_catalog(metadata):
 	data_obj = [
@@ -224,7 +224,7 @@ def index():
 		result = main(request.args)
 		print(result)
 		return json.dumps(result)
-	return json.dumps({'status':'ERROR', 'message':'No parameters were given'})
+	return json.dumps({'status':'ERROR', 'value':'No parameters were given'})
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser()
