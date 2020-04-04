@@ -36,12 +36,12 @@ if store_in_catalog:
 	CATALOG_SERVER = os.environ.get('CATALOG_SERVER')
 
 def song_processing(paths):
-	os.system(f"youtube-dl -x --audio-format mp3 -o {paths["song_path"]} {paths["url"]}")
-	os.system(f"spleeter separate -i {paths["song_path"]} -p spleeter:5stems -o {paths["temp_dir"]}")
+	os.system(f'youtube-dl -x --audio-format mp3 -o {paths["song_path"]} {paths["url"]}')
+	os.system(f'spleeter separate -i {paths["song_path"]} -p spleeter:5stems -o {paths["temp_dir"]}')
 	duration = split_song(paths["temp_path"], paths["out_path"])
 	output = store_metadata(paths["url"], paths["out_path"])
-	os.system(f"mv {paths["song_path"]} {paths["out_path"]}/{paths["song_name"]}")
-	os.system(f"rm -fr {paths["temp_path"]}")
+	os.system(f'mv {paths["song_path"]} {paths["out_path"]}/{paths["song_name"]}')
+	os.system(f'rm -fr {paths["temp_path"]}')
 	if upload_to_drive:
 		upload_folder(paths["name"])
 
@@ -61,20 +61,20 @@ def main(args):
 		paths["song_dir"] = "songs"
 		paths["temp_dir"] = "processed"
 		paths["out_dir"] = "../audio"
-		paths["song_path"] = f"{paths["song_dir"]}/{paths["name"]}.mp3"
-		paths["temp_path"] = f"{paths["temp_dir"]}/{paths["name"]}"
-		paths["out_path"] = f"{paths["out_dir"]}/{paths["name"]}"
-		paths["out_song"] = f"{paths["out_path"]}/{paths["song_name"]}"
+		paths["song_path"] = f'{paths["song_dir"]}/{paths["name"]}.mp3'
+		paths["temp_path"] = f'{paths["temp_dir"]}/{paths["name"]}'
+		paths["out_path"] = f'{paths["out_dir"]}/{paths["name"]}'
+		paths["out_song"] = f'{paths["out_path"]}/{paths["song_name"]}'
 		if not os.path.exists(song_dir):
-			os.system(f"mkdir {paths["song_dir"]}")
-			os.system(f"mkdir {paths["temp_dir"]}")
+			os.system(f'mkdir {paths["song_dir"]}')
+			os.system(f'mkdir {paths["temp_dir"]}')
 		if not os.path.exists(paths["out_song"]):
 			if 'webhook' in args and args['webhook'] is not None:
 				r = requests.get(args['webhook'])
 			song_processing(paths)
 		else:
 			duration = get_duration(paths["out_path"])
-			output = f"/#{paths["name"]},{duration}"
+			output = f'/#{paths["name"]},{duration}'
 		return {'status':'OK', 'message':output}
 	return {'status':'ERROR', 'message':'The video ID is missing'}
 
