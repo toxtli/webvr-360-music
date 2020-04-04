@@ -65,7 +65,7 @@ def main(args):
 		paths["temp_path"] = f'{paths["temp_dir"]}/{paths["name"]}'
 		paths["out_path"] = f'{paths["out_dir"]}/{paths["name"]}'
 		paths["out_song"] = f'{paths["out_path"]}/{paths["song_name"]}'
-		if not os.path.exists(song_dir):
+		if not os.path.exists(paths["song_dir"]):
 			os.system(f'mkdir {paths["song_dir"]}')
 			os.system(f'mkdir {paths["temp_dir"]}')
 		if not os.path.exists(paths["out_song"]):
