@@ -70,9 +70,10 @@ def main(args):
 			os.system(f'mkdir {paths["song_dir"]}')
 			os.system(f'mkdir {paths["temp_dir"]}')
 		if not os.path.exists(paths["out_song"]):
+			output = song_processing(paths)
 			if 'webhook' in args and args['webhook'] is not None:
 				r = requests.get(args['webhook'])
-			output = song_processing(paths)
+				print(r.text)
 		else:
 			duration = get_duration(paths["out_path"])
 			output = f'/#{paths["name"]},{duration}'
