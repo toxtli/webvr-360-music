@@ -44,6 +44,7 @@ def song_processing(paths):
 	os.system(f'rm -fr {paths["temp_path"]}')
 	if upload_to_drive:
 		upload_folder(paths["name"])
+	return output
 
 def main(args):
 	url = args['url']
@@ -71,7 +72,7 @@ def main(args):
 		if not os.path.exists(paths["out_song"]):
 			if 'webhook' in args and args['webhook'] is not None:
 				r = requests.get(args['webhook'])
-			song_processing(paths)
+			output = song_processing(paths)
 		else:
 			duration = get_duration(paths["out_path"])
 			output = f'/#{paths["name"]},{duration}'
