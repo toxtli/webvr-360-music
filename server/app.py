@@ -72,8 +72,9 @@ def main(args):
 		if not os.path.exists(paths["out_song"]):
 			output = song_processing(paths)
 			if 'webhook' in args and args['webhook'] is not None:
-				args['webhook'] += '&o=' + quote(output)
-				r = requests.get(args['webhook'])
+				webhook = args['webhook']
+				webhook += '&o=' + quote(output)
+				r = requests.get(webhook)
 				print(r.text)
 		else:
 			duration = get_duration(paths["out_path"])
