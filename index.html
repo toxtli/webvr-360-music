@@ -268,6 +268,8 @@
 					if (data.status == 'OK') {
 						window.location.href = data.value;
 						location.reload();
+					} else {
+						alert(JSON.stringify(data));
 					}
 			  });
 		});

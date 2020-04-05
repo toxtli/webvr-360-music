@@ -12,6 +12,7 @@ import tempfile
 import argparse
 from flask_cors import CORS
 from os.path import basename
+from threading import Thread
 from dotenv import load_dotenv
 from pydub import AudioSegment
 from flask import Flask, request
@@ -35,6 +36,11 @@ if upload_to_drive:
 if store_in_catalog:
 	CATALOG_SERVER = os.environ.get('CATALOG_SERVER')
 
+def song_processing_thread(paths):
+	thread = Thread(target=song_processing, args=(paths,))
+    thread.daemon = True
+    thread.start()
+
 def song_processing(paths):
 	os.system(f'youtube-dl -x --audio-format mp3 -o {paths["song_path"]} {paths["url"]}')
 	os.system(f'spleeter separate -i {paths["song_path"]} -p spleeter:5stems -o {paths["temp_dir"]}')
@@ -44,6 +50,9 @@ def song_processing(paths):
 	os.system(f'rm -fr {paths["temp_path"]}')
 	if upload_to_drive:
 		upload_folder(paths["name"])
+	if 'url_after' in paths:
+		r = requests.get(paths['url_after'])
+		print(r.text)
 	return output
 
 def main(args):
@@ -70,19 +79,25 @@ def main(args):
 			os.system(f'mkdir {paths["song_dir"]}')
 			os.system(f'mkdir {paths["temp_dir"]}')
 		if not os.path.exists(paths["out_song"]):
-			output = song_processing(paths)
 			if 'webhook' in args and args['webhook'] is not None:
-				webhook = args['webhook']
-				webhook += '&o=' + quote(output)
-				r = requests.get(webhook)
-				print(r.text)
+				url_webhook = args['webhook']
+				url_webhook += '&o=' + quote(output)
+				paths['url_after'] = url_webhook
+				song_processing_thread(paths)
+				output = f'/#{paths["name"]},60'
+				return {'status':'WAITING', 'value':output}
 			elif 'email' in args and args['email'] is not None:
 				email = args['email']
 				email_params = [email, output]
 				url_email = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=email&q='
 				url_email += quote(json.dumps(email_params))
-				r = requests.get(url_email)
-				print(r.text)
+				paths['url_after'] = url_email
+				song_processing_thread(paths)
+				output = f'/#{paths["name"]},60'
+				return {'status':'WAITING', 'value':output}
+			else:
+				output = song_processing(paths)
+				return {'status':'OK', 'value':output}
 		else:
 			duration = get_duration(paths["out_path"])
 			output = f'/#{paths["name"]},{duration}'
