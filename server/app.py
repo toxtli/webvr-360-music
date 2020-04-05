@@ -38,8 +38,8 @@ if store_in_catalog:
 
 def song_processing_thread(paths):
 	thread = Thread(target=song_processing, args=(paths,))
-    thread.daemon = True
-    thread.start()
+	thread.daemon = True
+	thread.start()
 
 def song_processing(paths):
 	os.system(f'youtube-dl -x --audio-format mp3 -o {paths["song_path"]} {paths["url"]}')
