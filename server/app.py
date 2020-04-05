@@ -50,8 +50,14 @@ def song_processing(paths):
 	os.system(f'rm -fr {paths["temp_path"]}')
 	if upload_to_drive:
 		upload_folder(paths["name"])
-	if 'url_after' in paths:
-		r = requests.get(paths['url_after'])
+	if 'url_webhook' in paths:
+		paths['url_webhook'] += '&o=' + quote(output)
+		r = requests.get(paths['url_webhook'])
+		print(r.text)
+	if 'url_email' in paths:
+		email_params = [paths['email'], output]
+		paths['url_email'] += quote(json.dumps(email_params))
+		r = requests.get(paths['url_email'])
 		print(r.text)
 	return output
 
@@ -80,18 +86,13 @@ def main(args):
 			os.system(f'mkdir {paths["temp_dir"]}')
 		if not os.path.exists(paths["out_song"]):
 			if 'webhook' in args and args['webhook'] is not None:
-				url_webhook = args['webhook']
-				url_webhook += '&o=' + quote(output)
-				paths['url_after'] = url_webhook
+				paths['url_webhook'] = args['webhook']
 				song_processing_thread(paths)
 				output = f'/#{paths["name"]},60'
 				return {'status':'WAITING', 'value':output}
 			elif 'email' in args and args['email'] is not None:
-				email = args['email']
-				email_params = [email, output]
-				url_email = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=email&q='
-				url_email += quote(json.dumps(email_params))
-				paths['url_after'] = url_email
+				paths['email'] = args['email']
+				paths['url_email'] = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=email&q='
 				song_processing_thread(paths)
 				output = f'/#{paths["name"]},60'
 				return {'status':'WAITING', 'value':output}
@@ -228,7 +229,7 @@ def upload_folder(dir_name):
 			file_drive = service.files().create(body=file_metadata,
                                     			media_body=media,
                                     			fields='id').execute()
-			#print(file_drive)
+			print(file_drive)
 			os.remove(file_path)
 	else:
 		print('The folder already exists')
