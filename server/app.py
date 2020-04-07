@@ -234,6 +234,10 @@ def upload_folder(dir_name):
 	else:
 		print('The folder already exists')
 
+@app.route('/test', methods=['GET'])
+def test():
+  return '{"status":"OK"}'
+
 @app.route('/', methods=['GET'])
 def index():
 	if request.args:
