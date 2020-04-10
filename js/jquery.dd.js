@@ -987,6 +987,7 @@ function dd(element, settings) {
 		fireEventIfExist("keyup");
 	};
 	var on_dblclick = function (evt) {
+		showFilterBox();
 		if (isDisabled === true) return false;
 		fireEventIfExist("dblclick");
 	};

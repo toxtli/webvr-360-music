@@ -51,6 +51,7 @@ const components = {
 
 export const findControllers = (target=[])=>{
 	//empty if not emptied
+	//document.getElementById('butMes').innerHTML = 'findControllers';
 	while(target.length){
 		target.splice(0, 1);
 	}
@@ -295,7 +296,7 @@ AFRAME.registerComponent('controls', {
 		const changed = diff(pluck(this.ping,'type', empty(tmpA)), pluck(this.pong,'type', empty(tmpB))) ||
             (this.el.hasAttribute(components[types.RETICAL]) !== shouldGetRetical(this.pong))
 
-
+        //document.getElementById('butMes').innerHTML = '1';
 
 
 		if(changed){
@@ -314,6 +315,8 @@ AFRAME.registerComponent('controls', {
 			);
 		}
 
+		//document.getElementById('butMes').innerHTML = '2';
+
 		//if it didnt change, there are no controllers, and retical is not already added
         if(shouldGetRetical(this.pong)) {
             this.el.setAttribute(components[types.RETICAL], true);
@@ -323,11 +326,14 @@ AFRAME.registerComponent('controls', {
             return;
         }
 
+        //document.getElementById('butMes').innerHTML = '3';
+
         if(!changed || !this.pong.length){
+        	this.el.setAttribute(components[types.VIVE], 'numberOfControllers: ' + 2);
         	return;
 		}
 
-
+		//document.getElementById('butMes').innerHTML = '4';
 
 		//see if its a vive
 		if(this.pong[0].type === types.VIVE){
@@ -335,6 +341,8 @@ AFRAME.registerComponent('controls', {
 			this.resetPingPong();
 			return;
 		}
+
+		//document.getElementById('butMes').innerHTML = '5';
 
 
 		//see if its Oculus
@@ -346,6 +354,8 @@ AFRAME.registerComponent('controls', {
 				return;
 			}
 		}
+
+		//document.getElementById('butMes').innerHTML = '6';
 
 		for(let i=0; i<this.pong.length; i++){
 			const controller = this.pong[i];
@@ -360,6 +370,8 @@ AFRAME.registerComponent('controls', {
 
 		}
 
+		//document.getElementById('butMes').innerHTML = '7';
+
         for(let i=0; i<this.pong.length; i++){
             const controller = this.pong[i];
             if(controller.type === types.DAYDREAM){
@@ -372,6 +384,9 @@ AFRAME.registerComponent('controls', {
             }
 
         }
+
+        //document.getElementById('butMes').innerHTML = '8';
+
 		this.resetPingPong();
 
 	},

@@ -157,7 +157,9 @@
 			<div id="goBack">
 				<a href='/'>Back to menu</a>
 				<BR><BR>
-				Click in the button below to play the song.
+				<div id="butMes">
+					Click in the button below to play the song.
+				</div>
 			</div>
 
 			<div id="enter-vr-container" style="color: #ffffff">
@@ -295,7 +297,7 @@
 							$(select).msDropDown();
 							$("body").append( "<style>#splash #splash-container #bands span {display:inline;}</style>");
 						} catch(e) {
-							alert(e.message);
+							console.log(e.message);
 						}
 					}
 			  });

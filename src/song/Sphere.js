@@ -257,6 +257,12 @@ AFRAME.registerComponent('sphere', {
 			'to': this._inactiveColor,
 		})
 		sphereEl.appendChild(deactivateAnim)
+
+		if (!window.hasOwnProperty('spheresList')) {
+			window.spheresList = [sphereEl];
+		} else {
+			window.spheresList.push(sphereEl);
+		}
 	},
 
 	update(){

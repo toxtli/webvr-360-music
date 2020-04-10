@@ -110,7 +110,7 @@ export class SplashScene {
             rings.forEach((ring, i) => {
                 ring.material.uniforms.waveform.value = waveforms[i];
             });
-            renderer.render(scene, camera)
+            //renderer.render(scene, camera)
             //composer.render();
         });
 
