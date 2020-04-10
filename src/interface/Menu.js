@@ -114,7 +114,7 @@ AFRAME.registerComponent('menu', {
 			let parts = hash.split(',')
 			let duration = parseInt(parts[1])
 			trackConfig[0] = {
-				artist : 'PLAY',
+				artist : 'PLAYING',
 				track : 'SONG',
 				folder : parts[0],
 				intro : 'song',
@@ -142,9 +142,11 @@ AFRAME.registerComponent('menu', {
 			currentSelection = planes[songId]
 		}
 
-    if (location.hash.substr(1)) {
-      setTimeout(this.open, 10000)  
-    }
+		window.customStart = this.open;
+
+	    // if (location.hash.substr(1)) {
+	    //   setTimeout(this.open, 10000)  
+	    // }
 	},
 
 	update(){

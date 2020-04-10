@@ -28,7 +28,7 @@ export const useVoiceOver = true
 export const supported = true; //Detector.webgl && Tone.supporte
 export const trackConfig = [
 	{
-		artist : 'PLAY',
+		artist : 'PLAYING',
 		track : 'SONG',
 		folder : 'america',
 		intro : 'song',

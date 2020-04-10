@@ -22,6 +22,7 @@ import {supported} from 'Config'
 import Transport from 'Tone/core/Transport'
 import '@ekolabs/aframe-spritesheet-component/dist/aframe-spritesheet-component'
 
+
 AFRAME.registerComponent('loading', {
 
 	schema : {
@@ -44,11 +45,14 @@ AFRAME.registerComponent('loading', {
 		this.voice = new Voice()
 
 		this.el.sceneEl.addEventListener('enter-360', () => {
-			this.voice.intro()
+			//this.voice.intro()
+			//const songId = 0
+			window.customStart();
 		})
 
 		this.el.sceneEl.addEventListener('enter-vr', () => {
-			this.voice.intro(3)
+			//this.voice.intro(3)
+			window.customStart();
 		})
 
 		this.first = false

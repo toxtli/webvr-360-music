@@ -24,7 +24,7 @@ export class ExitButton {
 
 		element.addEventListener('click', () => {
 			GA('ui', 'click', 'exit')
-			window.location.reload()
+			window.location.href = "/";
 		})
 
 		const scene = document.querySelector('a-scene')
