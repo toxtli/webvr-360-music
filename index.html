@@ -24,6 +24,9 @@
 	<script type="text/javascript" src="build/vendor.bundle.js"></script>
 	<script type="text/javascript" src="build/Main.js"></script>
 	<script type="text/javascript" src="build/Fallback.js"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.js" crossorigin="anonymous"></script>
+	<script src="js/jquery.dd.js"></script>
+
 
 
 	<!-- favicons -->
@@ -31,6 +34,7 @@
 	<link rel="shortcut icon" sizes="32x32" href="./images/favicon/favicon-32.png">
 	<link rel="shortcut icon" sizes="152x152" href="./images/favicon/favicon-152.png">
 	<link rel="shortcut icon" sizes="196x196" href="./images/favicon/favicon-196.png">
+	<link rel="stylesheet" type="text/css" href="css/dd.css" />
 </head>
 <body>
 	<a-scene
@@ -130,8 +134,33 @@
 		<canvas id="splash-canvas"></canvas>
 		<div id="splash-container">
 			<h1 id="title">INSIDE MUSIC</h1>
-			<p id="featuring">featuring</p>
-			<div id="bands"><span>Phoenix</span><span>Alarm Will Sound</span><span>Clipping</span><span>Natalia Lafourcade</span><span>Perfume Genius</span><span>Ibeyi</span></div>
+			<p id="featuring">Addapted by Carlos Toxtli</p>
+			<div id="songForm">
+				<div id="bands">
+					<span>
+						Youtube URL
+					</span>
+					<span>
+						<input type="text" id="url" name="url">
+					</span>
+					<span>
+						<input type="text" id="email" name="email" value="ctoxtli@gmail.com">
+					</span>
+					<span>
+						<button id="sendButton">transform</button>
+					</span>
+					<br>
+					<select id="songsList"></select>
+					<button id="selectSong">LOAD</button>
+				</div>
+			</div>
+			<div id="goBack">
+				<a href='/'>Back to menu</a>
+				<BR><BR>
+				<div id="butMes">
+					Click in the button below to play the song.
+				</div>
+			</div>
 
 			<div id="enter-vr-container" style="color: #ffffff">
 				<br>
@@ -140,7 +169,7 @@
 
 		</div>
 
-		<div id="badges">
+		<div id="badges" hidden>
 			<a href="https://webvrexperiments.com/" target="_blank">
 				<img src="./images/webVR_experiment@3x.png" class="badge">
 			</a>
@@ -185,28 +214,6 @@
 					<a target="_blank" href="http://songexploder.net/">Song Exploder</a> is a podcast where musicians take apart their songs, and piece by piece, tell the story of how they were made. Each episode combines an interview with an artist with the isolated, individual tracks within one of their songs. Host Hrishikesh Hirway asks the artists to guide listeners through the different sounds and their creative decisions.
 				</p>
 
-
-				<p class="bandLink">
-					<a target="_blank" href="https://www.lafourcade.com.mx/en/">Natalia Lafourcade</a> is a Grammy and Latin Grammy Award winner from Mexico City. The song "T&uacute; S&iacute; Sabes Quererme" is from her 2017 album <i>Musas</i>.
-				</p>
-				<p class="bandLink">
-					<a target="_blank" href="http://wearephoenix.com/">Phoenix</a> is a Grammy Award winning band originally from Versailles, France. The song "Ti Amo" is from their critically acclaimed 2017 album <i>Ti Amo</i>.
-				</p>
-				<p class="bandLink">
-					<a target="_blank" href="http://perfumegenius.org/">Perfume Genius</a> is the project of Seattle-based artist Mike Hadreas. The song "Slip Away" is from his 2017 album <i>No Shape</i>, one of the year's most acclaimed.
-				</p>
-				<p class="bandLink">
-					<a target="_blank" href="http://www.alarmwillsound.com/">Alarm Will Sound</a> is a 20-member band that has been described by The New York Times as "one of the most vital and original ensembles on the American music scene." The piece "Roadrunner" by composer John Adams is from the 2017 album <i>Splitting Adams</i> recorded in partnership with the <a href="http://www.wqxr.org/story/splitting-adams-john-adams-chamber-symphonies/" target="_blank">Meet the Composer podcast</a>.
-
-				</p>
-				<p class="bandLink">
-					<a target="_blank" href="http://www.clppng.com/">Clipping</a> consists of William Hutson, a Ph.D. in Theater and Performance Studies, Jonathan Snipes, film-score composer, and rapper Daveed Diggs, who won 2016 Tony and Grammy awards for his role as Marquis de Lafayette and Thomas Jefferson in the acclaimed Broadway musical Hamilton.
-				</p>
-				<p class="bandLink">
-					<a target="_blank" href="http://www.ibeyi.fr/">Ibeyi</a>  is a French-Cuban musical duo of twin sisters Lisa-Kaind&eacute; Diaz and Naomi Diaz that sings in both English and the West African language Yoruba. The song "Deathless" is from their forthcoming album <i>Ash</i>.
-				</p>
-
-
 			</div>
 
 		</div>
@@ -218,5 +225,92 @@
 	<div id="insertHeadset">
 		<img src="./images/insert_headset.gif">
 	</div>
+
+	<script>
+		document.getElementById('enter-vr-container').style.visibility = 'hidden';
+		setTimeout(()=>{
+			let hash = location.hash.substr(1);
+			if (hash) {
+				document.getElementById('enter-vr-container').style.visibility = 'visible';
+				document.getElementById('songForm').style.display = 'none';
+				document.getElementById('goBack').style.display = 'block';
+				//document.querySelector('.webvr-ui-button').click();
+			} else {
+				document.getElementById('songForm').style.display = 'block';
+				document.getElementById('goBack').style.display = 'none';
+				//document.getElementById('enter-vr-container').style.visibility = 'hidden';
+			}
+		}, 100);
+
+		document.getElementById('sendButton').addEventListener('click', () => {
+			console.log('PROCESSING SONG');
+			var serverUrl = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=queue&q=';
+			var youtubeUrl = document.getElementById('url').value;
+			var urlArr = [youtubeUrl];
+			var email = document.getElementById('email').value;
+			if (email) {
+				urlArr.push(email);
+			}
+			//serverUrl += encodeURI(youtubeUrl);
+			serverUrl += encodeURI(JSON.stringify(urlArr));
+			console.log(serverUrl);
+			fetch(serverUrl)
+				.then((response) => {
+			    return response.json();
+			  })
+			  .then((data) => {
+					console.log(data);
+					if (data.status == 'OK') {
+						window.location.href = data.value;
+						location.reload();
+					} else {
+						console.log(JSON.stringify(data));
+					}
+			  });
+		});
+
+		document.getElementById('selectSong').addEventListener('click', () => {
+			var select = document.getElementById('songsList');
+			var hashUrl = '/#'+ select.value;
+			window.location.href = hashUrl;
+			location.reload();
+		});
+
+		(function() {
+			var select = document.getElementById('songsList');
+			var serverUrl = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=read&q=songs';
+			fetch(serverUrl)
+			    .then((response) => {
+			        return response.json();
+			    })
+			    .then((data) => {
+					if (data.status == 'OK') {
+						var values = data.value;
+						for (var row of values) {
+							var opt = document.createElement('option');
+						    opt.value = row[0] + ',' + row[2];
+						    opt.setAttribute("data-image", row[3]);
+						    opt.innerHTML = row[1];
+						    select.appendChild(opt);
+						}
+						try {
+							$(select).msDropDown();
+							$("body").append( "<style>#splash #splash-container #bands span {display:inline;}</style>");
+						} catch(e) {
+							console.log(e.message);
+						}
+					}
+			  });
+		})();
+
+		// let songs = document.querySelectorAll('.song');
+		// for (let song of songs) {
+		// 	song.addEventListener('click', ()=>{
+		// 		var hashUrl = '/#'+ song.id.replace('_',',');
+		// 		window.location.href = hashUrl;
+		// 		location.reload();
+		// 	});
+		// }
+	</script>
 </body>
 </html>
