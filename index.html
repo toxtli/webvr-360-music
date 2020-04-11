@@ -135,23 +135,44 @@
 		<div id="splash-container">
 			<h1 id="title">INSIDE MUSIC</h1>
 			<p id="featuring">Addapted by Carlos Toxtli</p>
-			<div id="songForm">
-				<div id="bands">
-					<span>
-						Youtube URL
-					</span>
-					<span>
-						<input type="text" id="url" name="url">
-					</span>
-					<span>
-						<input type="text" id="email" name="email" value="ctoxtli@gmail.com">
-					</span>
-					<span>
-						<button id="sendButton">transform</button>
-					</span>
-					<br>
-					<select id="songsList"></select>
-					<button id="selectSong">LOAD</button>
+			<div id="songSection">
+				<div id="songList">
+					<div>
+						You can select a song previously transformed by other users.
+					</div>
+					<select id="songsList">
+						<option value=''>--- LOADING THE SONGS LIST ... ---</option>
+					</select>
+					<button id="selectSong" disabled>LOAD</button>
+				</div>
+				<br>
+				<div>
+					============= OR =============
+				</div>
+				<br>
+				<div id="songForm">
+					<div>
+						Paste a Youtube URL to be converted (takes time, we will email you when done)
+					</div>
+					<div id="bands">
+						<span>
+							Youtube URL
+						</span>
+						<span>
+							<input type="text" id="url" name="url" size="48" placeholder="https://www.youtube.com/watch?v=[VIDEO_ID]">
+						</span>
+						<br>
+						<span>
+							Email
+						</span>
+						<span>
+							<input type="email" id="email" name="email" size="20" placeholder="your@email.com">
+						</span>
+						<span>
+							<button id="sendButton">transform</button>
+						</span>
+					</div>
+					<div id="formMsg"></div>
 				</div>
 			</div>
 			<div id="goBack">
@@ -232,48 +253,62 @@
 			let hash = location.hash.substr(1);
 			if (hash) {
 				document.getElementById('enter-vr-container').style.visibility = 'visible';
-				document.getElementById('songForm').style.display = 'none';
+				document.getElementById('songSection').style.display = 'none';
 				document.getElementById('goBack').style.display = 'block';
 				//document.querySelector('.webvr-ui-button').click();
 			} else {
-				document.getElementById('songForm').style.display = 'block';
+				document.getElementById('songSection').style.display = 'block';
 				document.getElementById('goBack').style.display = 'none';
 				//document.getElementById('enter-vr-container').style.visibility = 'hidden';
 			}
 		}, 100);
 
+		function playSong(vid) {
+			window.location.href = vid;
+			location.reload();
+		}
+
 		document.getElementById('sendButton').addEventListener('click', () => {
-			console.log('PROCESSING SONG');
 			var serverUrl = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=queue&q=';
 			var youtubeUrl = document.getElementById('url').value;
-			var urlArr = [youtubeUrl];
-			var email = document.getElementById('email').value;
-			if (email) {
-				urlArr.push(email);
+			if (youtubeUrl) {
+				var urlArr = [youtubeUrl];
+				var email = document.getElementById('email').value;
+				if (email) {
+					console.log('PROCESSING SONG');
+					urlArr.push(email);
+					//serverUrl += encodeURI(youtubeUrl);
+					serverUrl += encodeURI(JSON.stringify(urlArr));
+					console.log(serverUrl);
+					fetch(serverUrl)
+						.then((response) => {
+					    return response.json();
+					  })
+					  .then((data) => {
+							console.log(data);
+							if (data.status == 'OK') {
+								var songUrl = data.value;
+								document.getElementById('formMsg').innerHTML = 'We already have that song in the list. You can <a href=\'javascript:playSong("' + songUrl + '")\'>play it from this link</a>';
+							} else {
+								document.getElementById('formMsg').innerHTML = 'We got your request, depending on the queued tasks it may take minutes or hours. We will send an email when done, please check your inbox and your spam folder.';
+								console.log(data);
+							}
+					  });
+				} else {
+					document.getElementById('formMsg').innerHTML = 'Please provide a valid e-mail.';
+				}
+			} else {
+				document.getElementById('formMsg').innerHTML = 'Please provide a valid Youtube URL.';
 			}
-			//serverUrl += encodeURI(youtubeUrl);
-			serverUrl += encodeURI(JSON.stringify(urlArr));
-			console.log(serverUrl);
-			fetch(serverUrl)
-				.then((response) => {
-			    return response.json();
-			  })
-			  .then((data) => {
-					console.log(data);
-					if (data.status == 'OK') {
-						window.location.href = data.value;
-						location.reload();
-					} else {
-						console.log(JSON.stringify(data));
-					}
-			  });
 		});
 
 		document.getElementById('selectSong').addEventListener('click', () => {
 			var select = document.getElementById('songsList');
-			var hashUrl = '/#'+ select.value;
-			window.location.href = hashUrl;
-			location.reload();
+			if (select.value) {
+				var hashUrl = '/#'+ select.value;
+				window.location.href = hashUrl;
+				location.reload();
+			}
 		});
 
 		(function() {
@@ -285,6 +320,7 @@
 			    })
 			    .then((data) => {
 					if (data.status == 'OK') {
+						select.options[0].innerHTML = '--- CHOOSE A SONG ---';
 						var values = data.value;
 						for (var row of values) {
 							var opt = document.createElement('option');
@@ -302,6 +338,15 @@
 					}
 			  });
 		})();
+
+		$('#songsList').on('change', () => {
+			var select = document.getElementById('songsList');
+			if (select.value) {
+				document.getElementById('selectSong').removeAttribute('disabled');
+			} else {
+				document.getElementById('selectSong').setAttribute('disabled', '1');
+			}
+		});
 
 		// let songs = document.querySelectorAll('.song');
 		// for (let song of songs) {
