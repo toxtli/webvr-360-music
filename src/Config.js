@@ -16,6 +16,8 @@
 
 import Tone from 'Tone/core/Tone'
 import Detector from 'three/examples/js/Detector'
+import {GA} from 'utils/GA'
+//import {GA} from 'utils/GA'
 
 export const unitsPerSecond = 7
 export const circleHeight = 0
@@ -30,6 +32,26 @@ export const trackConfig = [
 	{
 		artist : 'PLAYING',
 		track : 'SONG',
+		folder : 'america',
+		intro : 'song',
+		segments : 8,
+		duration : 240,
+		// duration : 5,
+		trackNames : ['other', 'piano', 'drums', 'null', 'vocals', 'null', 'bass'],
+		names : ['other', 'piano', 'drums', 'null', 'vocals', 'null', 'bass'],
+		soundRings: {
+			startColor: '#f7002d',
+			endColor: '#00edaa',
+			shape: 'triangle',
+			size: 8
+		},
+		floor: {
+			color: '#253934' //#263330'
+		}
+	},
+	{
+		artist : 'BACK',
+		track : 'TO MENU',
 		folder : 'america',
 		intro : 'song',
 		segments : 8,
@@ -203,6 +225,11 @@ export const trackConfig = [
 export function getTrackData(artist){
 	// const index = trackConfig.findIndex(t => t.artist === artist)
 	// return trackConfig[index]
+	if (artist == 'BACK') {
+		//window.location.href = "/";
+		//window.location.reload();
+		GA('ui', 'click', 'exit');
+	}
 	let hash = location.hash.substr(1)
 	let parts = hash.split(',')
 	let duration = parseInt(parts[1])

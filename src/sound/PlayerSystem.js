@@ -34,11 +34,11 @@ AFRAME.registerSystem('player', {
 			Transport.clear(this.scheduleId)
 
 			const trackData = getTrackData(e.detail.artist)
+		
 			const duration = trackData.duration || 10
 			this.scheduleId = Transport.schedule(() => {
 				this.sceneEl.emit('song-end')
 			}, duration)
-
 
 		})
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Song Exploder Presents: Inside Music</title>
+	<title>Inside Music Youtube Edition</title>
 
 	<meta name="og:title" content="Song Exploder Presents: Inside Music">
 	<meta name="og:image" content="images/thumbnail.png">
@@ -30,11 +30,13 @@
 
 
 	<!-- favicons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="shortcut icon" sizes="16x16" href="./images/favicon/favicon-16.png">
 	<link rel="shortcut icon" sizes="32x32" href="./images/favicon/favicon-32.png">
 	<link rel="shortcut icon" sizes="152x152" href="./images/favicon/favicon-152.png">
 	<link rel="shortcut icon" sizes="196x196" href="./images/favicon/favicon-196.png">
-	<link rel="stylesheet" type="text/css" href="css/dd.css" />
+	<link rel="stylesheet" type="text/css" href="css/dd.css" />	
+	<link rel="stylesheet" type="text/css" href="css/index.css" />	
 </head>
 <body>
 	<a-scene
@@ -135,23 +137,46 @@
 		<div id="splash-container">
 			<h1 id="title">INSIDE MUSIC</h1>
 			<p id="featuring">Addapted by Carlos Toxtli</p>
-			<div id="songForm">
-				<div id="bands">
-					<span>
-						Youtube URL
-					</span>
-					<span>
-						<input type="text" id="url" name="url">
-					</span>
-					<span>
-						<input type="text" id="email" name="email" value="ctoxtli@gmail.com">
-					</span>
-					<span>
-						<button id="sendButton">transform</button>
-					</span>
-					<br>
-					<select id="songsList"></select>
-					<button id="selectSong">LOAD</button>
+			<div id="debugMsg"></div>
+			<div id="songSection">
+				<div id="songList">
+					<div>
+						You can select a song previously transformed by other users.
+					</div>
+					<button id="toggleSearch" class="btn"><i class="fa fa-search"></i></button>
+					<select id="songsList">
+						<option value=''>--- LOADING THE SONGS LIST ... ---</option>
+					</select>
+					<button id="selectSong" class="btn"><i class="fa fa-play"></i></button>
+				</div>
+				<br>
+				<div>
+					============= OR =============
+				</div>
+				<br>
+				<div id="songForm">
+					<div>
+						Paste a Youtube URL to be converted (takes time, we will email you when done)
+					</div>
+					<div id="bands">
+						<span>
+							Youtube URL
+						</span>
+						<span>
+							<input type="text" id="url" name="url" size="48" placeholder="https://www.youtube.com/watch?v=[VIDEO_ID]">
+						</span>
+						<br>
+						<span>
+							Email
+						</span>
+						<span>
+							<input type="email" id="email" name="email" size="20" placeholder="your@email.com">
+						</span>
+						<span>
+							<button id="sendButton">transform</button>
+						</span>
+					</div>
+					<div id="formMsg"></div>
 				</div>
 			</div>
 			<div id="goBack">
@@ -226,91 +251,6 @@
 		<img src="./images/insert_headset.gif">
 	</div>
 
-	<script>
-		document.getElementById('enter-vr-container').style.visibility = 'hidden';
-		setTimeout(()=>{
-			let hash = location.hash.substr(1);
-			if (hash) {
-				document.getElementById('enter-vr-container').style.visibility = 'visible';
-				document.getElementById('songForm').style.display = 'none';
-				document.getElementById('goBack').style.display = 'block';
-				//document.querySelector('.webvr-ui-button').click();
-			} else {
-				document.getElementById('songForm').style.display = 'block';
-				document.getElementById('goBack').style.display = 'none';
-				//document.getElementById('enter-vr-container').style.visibility = 'hidden';
-			}
-		}, 100);
-
-		document.getElementById('sendButton').addEventListener('click', () => {
-			console.log('PROCESSING SONG');
-			var serverUrl = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=queue&q=';
-			var youtubeUrl = document.getElementById('url').value;
-			var urlArr = [youtubeUrl];
-			var email = document.getElementById('email').value;
-			if (email) {
-				urlArr.push(email);
-			}
-			//serverUrl += encodeURI(youtubeUrl);
-			serverUrl += encodeURI(JSON.stringify(urlArr));
-			console.log(serverUrl);
-			fetch(serverUrl)
-				.then((response) => {
-			    return response.json();
-			  })
-			  .then((data) => {
-					console.log(data);
-					if (data.status == 'OK') {
-						window.location.href = data.value;
-						location.reload();
-					} else {
-						console.log(JSON.stringify(data));
-					}
-			  });
-		});
-
-		document.getElementById('selectSong').addEventListener('click', () => {
-			var select = document.getElementById('songsList');
-			var hashUrl = '/#'+ select.value;
-			window.location.href = hashUrl;
-			location.reload();
-		});
-
-		(function() {
-			var select = document.getElementById('songsList');
-			var serverUrl = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=read&q=songs';
-			fetch(serverUrl)
-			    .then((response) => {
-			        return response.json();
-			    })
-			    .then((data) => {
-					if (data.status == 'OK') {
-						var values = data.value;
-						for (var row of values) {
-							var opt = document.createElement('option');
-						    opt.value = row[0] + ',' + row[2];
-						    opt.setAttribute("data-image", row[3]);
-						    opt.innerHTML = row[1];
-						    select.appendChild(opt);
-						}
-						try {
-							$(select).msDropDown();
-							$("body").append( "<style>#splash #splash-container #bands span {display:inline;}</style>");
-						} catch(e) {
-							console.log(e.message);
-						}
-					}
-			  });
-		})();
-
-		// let songs = document.querySelectorAll('.song');
-		// for (let song of songs) {
-		// 	song.addEventListener('click', ()=>{
-		// 		var hashUrl = '/#'+ song.id.replace('_',',');
-		// 		window.location.href = hashUrl;
-		// 		location.reload();
-		// 	});
-		// }
-	</script>
+	<script src="js/index.js"></script>
 </body>
 </html>
