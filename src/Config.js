@@ -226,9 +226,8 @@ export function getTrackData(artist){
 	// const index = trackConfig.findIndex(t => t.artist === artist)
 	// return trackConfig[index]
 	if (artist == 'BACK') {
-		//window.location.href = "/";
+		window.location.href = "/";
 		//window.location.reload();
-		GA('ui', 'click', 'exit');
 	}
 	let hash = location.hash.substr(1)
 	let parts = hash.split(',')
