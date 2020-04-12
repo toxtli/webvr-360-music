@@ -16,7 +16,6 @@
 
 import Tone from 'Tone/core/Tone'
 import Detector from 'three/examples/js/Detector'
-import {GA} from 'utils/GA'
 //import {GA} from 'utils/GA'
 
 export const unitsPerSecond = 7
@@ -49,26 +48,26 @@ export const trackConfig = [
 			color: '#253934' //#263330'
 		}
 	},
-	{
-		artist : 'BACK',
-		track : 'TO MENU',
-		folder : 'america',
-		intro : 'song',
-		segments : 8,
-		duration : 240,
-		// duration : 5,
-		trackNames : ['other', 'piano', 'drums', 'null', 'vocals', 'null', 'bass'],
-		names : ['other', 'piano', 'drums', 'null', 'vocals', 'null', 'bass'],
-		soundRings: {
-			startColor: '#f7002d',
-			endColor: '#00edaa',
-			shape: 'triangle',
-			size: 8
-		},
-		floor: {
-			color: '#253934' //#263330'
-		}
-	}
+	// {
+	// 	artist : 'BACK',
+	// 	track : 'TO MENU',
+	// 	folder : 'america',
+	// 	intro : 'song',
+	// 	segments : 8,
+	// 	duration : 240,
+	// 	// duration : 5,
+	// 	trackNames : ['other', 'piano', 'drums', 'null', 'vocals', 'null', 'bass'],
+	// 	names : ['other', 'piano', 'drums', 'null', 'vocals', 'null', 'bass'],
+	// 	soundRings: {
+	// 		startColor: '#f7002d',
+	// 		endColor: '#00edaa',
+	// 		shape: 'triangle',
+	// 		size: 8
+	// 	},
+	// 	floor: {
+	// 		color: '#253934' //#263330'
+	// 	}
+	// }
 	// {
 	// 	artist : 'america',
 	// 	track : 'america',
@@ -225,10 +224,20 @@ export const trackConfig = [
 export function getTrackData(artist){
 	// const index = trackConfig.findIndex(t => t.artist === artist)
 	// return trackConfig[index]
-	if (artist == 'BACK') {
-		window.location.href = "/";
-		//window.location.reload();
-	}
+	// if (artist == 'BACK') {
+	// 	//window.history.go(-2);
+	// 	//window.location.href = "/";
+	// 	if(window.hasOwnProperty('exitVR')) {
+	// 		try {
+	// 			window.exitVR();	
+	// 		} catch(e) {
+	// 			console.log(e);
+	// 		}
+	// 	} else {
+	// 		window.location.href = "/";
+	// 	}
+	// 	//window.location.reload();
+	// }
 	let hash = location.hash.substr(1)
 	let parts = hash.split(',')
 	let duration = parseInt(parts[1])

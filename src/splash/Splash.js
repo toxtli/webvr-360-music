@@ -113,7 +113,12 @@ export default function initSplash(container=document.body){
         splashScene.close()
 		aScene.play();
 		aScene.enterVR();
-        GA('ui', 'enter', 'vr')
+        GA('ui', 'enter', 'vr');
+        // try {
+        //     window.exitVR = aScene.exitVR;
+        // } catch(e) {
+        //     console.log(e);
+        // }
 	});
 
 	enterVRButton.on('exit', ()=>{
