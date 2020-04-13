@@ -72,8 +72,7 @@ export class Voice extends events.EventEmitter{
 		this._players.get('experience').start()
 	}
 
-	song(track){
-		this.stop()
+	playVoices() {
 		if (this._players.has(track.artist) && useVoiceOver){
 			this._players.get(track.artist).start('+0.5')
 			let duration = this._players.get(track.artist).buffer.duration + 0.5
@@ -94,6 +93,22 @@ export class Voice extends events.EventEmitter{
 				this.emit('ended')
 			}, 200)
 		}
+	}
+
+	playUntilLoaded(inputFn) {
+		try {
+			inputFn()
+		} catch(e) {
+			console.log('RETRY')
+			setTimeout(() => {
+				inputFn()
+			}, 200)
+		}
+	}
+
+	song(track){
+		this.stop()
+		this.playUntilLoaded(this.playVoices)
 	}
 
 	/**
