@@ -55,7 +55,7 @@ export class Voice extends events.EventEmitter{
 		//console.log(url)
 		this._players.add(trackName, url, (e) => {
 			if (!e.loaded) {
-				//console.log(e)
+				console.log(e)
 				setTimeout(() => {
 					loadTrack(trackName, url)
 				}, Math.random() * 200 + 200)
@@ -91,6 +91,8 @@ export class Voice extends events.EventEmitter{
 				this._id = Tone.context.setTimeout(() => {
 					this.emit('ended')
 				}, duration)
+			} else {
+				setTimeout(() => {this.song(track)}, 200)
 			}
 		} else {
 			setTimeout(() => {

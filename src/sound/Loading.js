@@ -45,6 +45,7 @@ AFRAME.registerComponent('loading', {
 		this.voice = new Voice()
 
 		this.el.sceneEl.addEventListener('enter-360', () => {
+			console.log('enter-360')
 			//this.voice.intro()
 			//const songId = 0
 			window.customStart();
@@ -58,12 +59,14 @@ AFRAME.registerComponent('loading', {
 		this.first = false
 
 		this.el.sceneEl.addEventListener('menu-selection', (e) => {
+			console.log('menu-selection')
 			this.voice.song(e.detail)
 			//record as the first menu selection
 			this.first = true
 		})
 
 		this.el.sceneEl.addEventListener('audio-loaded', () => {
+			console.log('audio-loaded')
 			this.el.setAttribute('loading', 'loader', false)
 		})
 
