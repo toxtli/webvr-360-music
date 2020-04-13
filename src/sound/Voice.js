@@ -52,10 +52,10 @@ export class Voice extends events.EventEmitter{
 	}
 
 	loadTrack(trackName, url){
-		console.log(url)
+		//console.log(url)
 		this._players.add(trackName, url, (e) => {
 			if (!e.loaded) {
-				console.log(e)
+				//console.log(e)
 				setTimeout(() => {
 					loadTrack(trackName, url)
 				}, Math.random() * 200 + 200)
@@ -74,26 +74,26 @@ export class Voice extends events.EventEmitter{
 
 	song(track){
 		this.stop()
-		if (this._players.has(track.artist) && useVoiceOver){
-			this._players.get(track.artist).start('+0.5')
-			let duration = this._players.get(track.artist).buffer.duration + 0.5
+		setTimeout(() => {
+			if (this._players.has(track.artist) && useVoiceOver){
+				this._players.get(track.artist).start('+0.5')
+				let duration = this._players.get(track.artist).buffer.duration + 0.5
 
-			if (!this._playedLoading){
-				this._playedLoading = true
-				setTimeout(() => {
+				if (!this._playedLoading){
+					this._playedLoading = true				
 					this._players.get('loading').start(`+${duration}`)
 					duration += this._players.get('loading').buffer.duration
-				}, Math.random() * 200 + 200)
-			}
+				}
 
-			this._id = Tone.context.setTimeout(() => {
-				this.emit('ended')
-			}, duration)
-		} else {
-			setTimeout(() => {
-				this.emit('ended')
-			}, 200)
-		}
+				this._id = Tone.context.setTimeout(() => {
+					this.emit('ended')
+				}, duration)
+			} else {
+				setTimeout(() => {
+					this.emit('ended')
+				}, 200)
+			}
+		}, Math.random() * 200 + 200)
 	}
 
 	/**
