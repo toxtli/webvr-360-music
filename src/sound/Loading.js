@@ -60,7 +60,7 @@ AFRAME.registerComponent('loading', {
 
 		this.el.sceneEl.addEventListener('menu-selection', (e) => {
 			console.log('menu-selection')
-			this.voice.song(e.detail)
+			this.voice.song()
 			//record as the first menu selection
 			this.first = true
 		})
@@ -68,6 +68,7 @@ AFRAME.registerComponent('loading', {
 		this.el.sceneEl.addEventListener('audio-loaded', () => {
 			console.log('audio-loaded')
 			this.el.setAttribute('loading', 'loader', false)
+			this.voice.song()
 		})
 
 		this.el.sceneEl.addEventListener('buffering', () => {

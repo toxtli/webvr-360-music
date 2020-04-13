@@ -27,6 +27,7 @@ export class Voice extends events.EventEmitter{
 		super()
 
 		this._playedLoading = false
+		this._hadErrorLoading = false
 
 		const voFolder = './audio/vo'
 		const voServer = 'http://demos.hcilab.ml/audio'
@@ -37,7 +38,7 @@ export class Voice extends events.EventEmitter{
 
 		trackConfig.forEach(track => {
 			if (track.intro){
-				this.loadTrack(track.artist, `${voServer}/song.mp3`)
+				//this.loadTrack(track.artist, `${voServer}/song.mp3`)
 			}
 		})
 
@@ -72,27 +73,27 @@ export class Voice extends events.EventEmitter{
 		this._players.get('experience').start()
 	}
 
-	song(track){
+	song(){
 		this.stop()
-		if (this._players.has(track.artist) && useVoiceOver){
-			let player = this._players.get(track.artist)
-			if(player.loaded) {
-				this._players.get(track.artist).start('+0.5')
-				let duration = this._players.get(track.artist).buffer.duration + 0.5
+		if (useVoiceOver){
+			let duration = 1.7
 
-				if (!this._playedLoading){
-					this._playedLoading = true
-					console.log('DURATION')		
-					console.log(duration)
+			if (!this._playedLoading){
+				this._playedLoading = true
+				let player = this._players.get('loading')
+				if (player.loaded) {
 					this._players.get('loading').start(`+${duration}`)
 					duration += this._players.get('loading').buffer.duration
+					this._hadErrorLoading = false;
+				} else {
+					this._hadErrorLoading = true;
 				}
+			}
 
+			if (!this._hadErrorLoading) {
 				this._id = Tone.context.setTimeout(() => {
 					this.emit('ended')
 				}, duration)
-			} else {
-				setTimeout(() => {this.song(track)}, 200)
 			}
 		} else {
 			setTimeout(() => {
