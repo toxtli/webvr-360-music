@@ -76,22 +76,22 @@ export class Voice extends events.EventEmitter{
 		this.stop()
 		if (this._players.has(track.artist) && useVoiceOver){
 			let player = this._players.get(track.artist)
-			console.log(player.loaded)
-			while(!player.loaded){}
-			this._players.get(track.artist).start('+0.5')
-			let duration = this._players.get(track.artist).buffer.duration + 0.5
+			if(player.loaded) {
+				this._players.get(track.artist).start('+0.5')
+				let duration = this._players.get(track.artist).buffer.duration + 0.5
 
-			if (!this._playedLoading){
-				this._playedLoading = true
-				console.log('DURATION')		
-				console.log(duration)
-				this._players.get('loading').start(`+${duration}`)
-				duration += this._players.get('loading').buffer.duration
+				if (!this._playedLoading){
+					this._playedLoading = true
+					console.log('DURATION')		
+					console.log(duration)
+					this._players.get('loading').start(`+${duration}`)
+					duration += this._players.get('loading').buffer.duration
+				}
+
+				this._id = Tone.context.setTimeout(() => {
+					this.emit('ended')
+				}, duration)
 			}
-
-			this._id = Tone.context.setTimeout(() => {
-				this.emit('ended')
-			}, duration)
 		} else {
 			setTimeout(() => {
 				this.emit('ended')
