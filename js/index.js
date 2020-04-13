@@ -1,18 +1,19 @@
 
-document.getElementById('enter-vr-container').style.visibility = 'hidden';
-setTimeout(()=>{
-	let hash = location.hash.substr(1);
-	if (hash) {
-		document.getElementById('enter-vr-container').style.visibility = 'visible';
-		document.getElementById('songSection').style.display = 'none';
-		document.getElementById('goBack').style.display = 'block';
-		//document.querySelector('.webvr-ui-button').click();
-	} else {
-		document.getElementById('songSection').style.display = 'block';
-		document.getElementById('goBack').style.display = 'none';
-		//document.getElementById('enter-vr-container').style.visibility = 'hidden';
-	}
-}, 100);
+
+//setTimeout(()=>{
+let hash = location.hash.substr(1);
+if (hash) {
+	document.getElementById('enter-vr-container').style.visibility = 'visible';
+	document.getElementById('songSection').style.display = 'none';
+	document.getElementById('goBack').style.display = 'block';
+	//document.querySelector('.webvr-ui-button').click();
+} else {
+	document.getElementById('songSection').style.display = 'block';
+	document.getElementById('goBack').style.display = 'none';
+	document.getElementById('enter-vr-container').style.visibility = 'hidden';
+	//document.getElementById('enter-vr-container').style.visibility = 'hidden';
+}
+//}, 100);
 
 function playSong(vid) {
 	window.location.href = vid;
