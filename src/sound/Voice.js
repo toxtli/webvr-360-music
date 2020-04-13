@@ -99,9 +99,10 @@ export class Voice extends events.EventEmitter{
 		try {
 			inputFn()
 		} catch(e) {
+			console.log(e)
 			console.log('RETRY')
 			setTimeout(() => {
-				inputFn()
+				this.playUntilLoaded(inputFn)
 			}, 200)
 		}
 	}
