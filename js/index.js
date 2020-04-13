@@ -74,34 +74,36 @@ document.getElementById('toggleSearch').addEventListener('click', () => {
 });
 
 (function() {
-	var select = document.getElementById('songsList');
-	var serverUrl = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=readSongs&q=1';
-	fetch(serverUrl)
-	    .then((response) => {
-	        return response.json();
-	    })
-	    .then((data) => {
-			if (data.status == 'OK') {
-				select.options[0].innerHTML = '--- CHOOSE A SONG ---';
-				var values = data.value;
-				for (var row of values) {
-					if (row[0]) {
-						var opt = document.createElement('option');
-					    opt.value = row[0] + ',' + row[2];
-					    opt.setAttribute("data-image", "https://i.ytimg.com/vi/" + row[0] + "/default.jpg");
-					    opt.innerHTML = row[1];
-					    select.appendChild(opt);
+	if (!location.hash.substr(1)) {
+		var select = document.getElementById('songsList');
+		var serverUrl = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=readSongs&q=1';
+		fetch(serverUrl)
+		    .then((response) => {
+		        return response.json();
+		    })
+		    .then((data) => {
+				if (data.status == 'OK') {
+					select.options[0].innerHTML = '--- CHOOSE A SONG ---';
+					var values = data.value;
+					for (var row of values) {
+						if (row[0]) {
+							var opt = document.createElement('option');
+						    opt.value = row[0] + ',' + row[2];
+						    opt.setAttribute("data-image", "https://i.ytimg.com/vi/" + row[0] + "/default.jpg");
+						    opt.innerHTML = row[1];
+						    select.appendChild(opt);
+						}
+					}
+					try {
+						$(select).msDropDown();
+						var oDropdown = $("#songsList").msDropdown().data("dd");
+						$("body").append( "<style>#splash #splash-container #bands span {display:inline;}</style>");
+					} catch(e) {
+						console.log(e.message);
 					}
 				}
-				try {
-					$(select).msDropDown();
-					var oDropdown = $("#songsList").msDropdown().data("dd");
-					$("body").append( "<style>#splash #splash-container #bands span {display:inline;}</style>");
-				} catch(e) {
-					console.log(e.message);
-				}
-			}
-	  });
+		  });
+	}
 })();
 
 $('#songsList').on('change', () => {
