@@ -74,7 +74,7 @@ export class Voice extends events.EventEmitter{
 	}
 
 	song(){
-		this.stop()
+		//this.stop()
 		if (useVoiceOver){
 			if (!this._playedLoading) {
 				let duration = 1.7
