@@ -80,10 +80,10 @@ export class Voice extends events.EventEmitter{
 				let duration = 1.7
 				let player = this._players.get('loading')
 				if (player.loaded) {
+					this._playedLoading = true
 					this._players.get('loading').start(`+${duration}`)
 					duration += this._players.get('loading').buffer.duration
 					this._hadErrorLoading = false;
-					this._playedLoading = true
 				} else {
 					this._hadErrorLoading = true;
 				}
