@@ -67,8 +67,8 @@ AFRAME.registerComponent('loading', {
 
 		this.el.sceneEl.addEventListener('audio-loaded', () => {
 			console.log('audio-loaded')
-			this.el.setAttribute('loading', 'loader', false)
 			this.voice.song()
+			this.el.setAttribute('loading', 'loader', false)
 		})
 
 		this.el.sceneEl.addEventListener('buffering', () => {
