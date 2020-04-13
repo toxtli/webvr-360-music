@@ -78,10 +78,37 @@ export class StreamingPlayer extends events.EventEmitter {
 		this.loaded = false
 
 		// load the first buffer and emit 'loaded event on first one'
-		const firstBuffer = new Buffer(this.trackName(), () => {
+		let nameTrack = this.trackName()
+		this.loadFirstTrack(nameTrack)
+	}
+
+	loadFirstTrack(nameTrack) {
+		const firstBuffer = new Buffer(nameTrack, () => {
 			this.buffers[0] = firstBuffer
 			this.loaded = true
 			this.emit('loaded')
+		}, () => {
+			setTimeout(() => {
+				loadFirstTrack(nameTrack)
+			}, Math.random() * 200 + 200)
+		})
+	}
+
+	loadNextTrack(nameTrack, seg) {
+		const nextBuffer = new Buffer(nameTrack, () => {
+			if (this.buffering){
+				this.buffering = false
+				this.emit('bufferingEnd')
+			}
+			//remove the previous one
+			if (this.buffers[seg-2]){
+				this.buffers[seg-2] = null
+			}
+			this.buffers[seg] = nextBuffer
+		}, () => {
+			setTimeout(() => {
+				loadNextTrack(nameTrack, seg)
+			}, Math.random() * 200 + 200)
 		})
 	}
 
@@ -90,17 +117,8 @@ export class StreamingPlayer extends events.EventEmitter {
 			const seg = this.segment
 			if (seg <= this.totalSegments){
 				setTimeout(() => {
-					const nextBuffer = new Buffer(this.trackName(), () => {
-						if (this.buffering){
-							this.buffering = false
-							this.emit('bufferingEnd')
-						}
-						//remove the previous one
-						if (this.buffers[seg-2]){
-							this.buffers[seg-2] = null
-						}
-						this.buffers[seg] = nextBuffer
-					})
+					let nameTrack = this.trackName()
+					this.loadNextTrack(nameTrack, seg)
 				}, Math.random() * 5000 + 1000)
 			}
 		}

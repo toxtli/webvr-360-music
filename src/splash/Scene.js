@@ -35,9 +35,9 @@ require('three/examples/js/shaders/CopyShader');
 //returns a Promise which resolves with an array
 const getBuffer = () =>
     new Promise(resolve => {
-        AudioBuffer.load('./audio/perfume_genius/MBIRA-0.[mp3|ogg]', buffer =>
-            resolve(buffer.getChannelData(0))
-        )
+        // AudioBuffer.load('./audio/perfume_genius/MBIRA-0.[mp3|ogg]', buffer =>
+        //     resolve(buffer.getChannelData(0))
+        // )
     });
 
 

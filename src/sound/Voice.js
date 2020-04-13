@@ -37,18 +37,24 @@ export class Voice extends events.EventEmitter{
 
 		trackConfig.forEach(track => {
 			if (track.intro){
-				this._players.add(track.artist, `${voFolder}/${track.intro}.[mp3|ogg]`)
+				this.loadTrack(track.artist, `${voServer}/song.mp3`)
 			}
 		})
 
 		//this._players.add('experience', `${voFolder}/intro.[mp3|ogg]`)
 		//this._players.add('experience', `https://drive.google.com/uc?export=download&id=1DexhEJ656ejRu4Uy5lwFWY4Z7S0sNQ8O`)
 		//this._players.add('experience', `https://drive.google.com/uc?id=1DexhEJ656ejRu4Uy5lwFWY4Z7S0sNQ8O`)
-		this._players.add('experience', `${voServer}/intro.mp3`)
-		this._players.add('loading', `${voServer}/loading.mp3`)
+		this.loadTrack('experience', `${voServer}/intro.mp3`)
+		this.loadTrack('loading', `${voServer}/loading.mp3`)
 		//this._players.add('loading', `${voFolder}/loading.[mp3|ogg]`)
 
 		this._id = -1
+	}
+
+	loadTrack(trackName, url){
+		this._players.add(trackName, url, (e) => {
+			console.log(e)
+		})
 	}
 
 	pickAnother(){
