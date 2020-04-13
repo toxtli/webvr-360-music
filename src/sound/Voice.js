@@ -52,8 +52,14 @@ export class Voice extends events.EventEmitter{
 	}
 
 	loadTrack(trackName, url){
+		console.log(url)
 		this._players.add(trackName, url, (e) => {
-			console.log(e)
+			if (!e.loaded) {
+				console.log(e)
+				setTimeout(() => {
+					loadTrack(trackName, url)
+				}, Math.random() * 200 + 200)
+			}
 		})
 	}
 
@@ -74,8 +80,10 @@ export class Voice extends events.EventEmitter{
 
 			if (!this._playedLoading){
 				this._playedLoading = true
-				this._players.get('loading').start(`+${duration}`)
-				duration += this._players.get('loading').buffer.duration
+				setTimeout(() => {
+					this._players.get('loading').start(`+${duration}`)
+					duration += this._players.get('loading').buffer.duration
+				}, Math.random() * 200 + 200)
 			}
 
 			this._id = Tone.context.setTimeout(() => {

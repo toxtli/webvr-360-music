@@ -135,7 +135,9 @@ export default function initSplash(container=document.body){
 	});
 
     //start the audio context on click
-    StartAudioContext(Tone.context, [enterVRContainer])
+    if (location.hash.substr(1)) {
+        StartAudioContext(Tone.context, [enterVRContainer])
+    }
 	splashScene.start();
 
     window.splashScene = splashScene;
