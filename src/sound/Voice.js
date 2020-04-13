@@ -77,8 +77,9 @@ export class Voice extends events.EventEmitter{
 		this.stop()
 		if (useVoiceOver){
 			if (!this._playedLoading) {
+				let duration = 1.7
+				
 				if (this._hadErrorLoading){
-					let duration = 1.7
 					let player = this._players.get('loading')
 					if (player.loaded) {
 						this._players.get('loading').start(`+${duration}`)
