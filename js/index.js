@@ -85,11 +85,13 @@ document.getElementById('toggleSearch').addEventListener('click', () => {
 				select.options[0].innerHTML = '--- CHOOSE A SONG ---';
 				var values = data.value;
 				for (var row of values) {
-					var opt = document.createElement('option');
-				    opt.value = row[0] + ',' + row[2];
-				    opt.setAttribute("data-image", "https://i.ytimg.com/vi/" + row[0] + "/default.jpg");
-				    opt.innerHTML = row[1];
-				    select.appendChild(opt);
+					if (row[0]) {
+						var opt = document.createElement('option');
+					    opt.value = row[0] + ',' + row[2];
+					    opt.setAttribute("data-image", "https://i.ytimg.com/vi/" + row[0] + "/default.jpg");
+					    opt.innerHTML = row[1];
+					    select.appendChild(opt);
+					}
 				}
 				try {
 					$(select).msDropDown();
