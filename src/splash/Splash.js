@@ -141,15 +141,19 @@ export default function initSplash(container=document.body){
 	enterVRButton.on('error', ()=>{
         console.log('enterVRButton.on.error')
         console.log(enterVRButton.state)
-        splash.classList.remove('visible')
-        splashScene.close()
-        aScene.play();
-        aScene.enterVR();
         GA('ui', 'enter', 'vr');
 		if(enterVRButton.state === webvrui.State.ERROR_NO_PRESENTABLE_DISPLAYS || enterVRButton.state === webvrui.State.ERROR_BROWSER_NOT_SUPPORTED){
 		    console.log('createEnter360Button')
             createEnter360Button();
 		}
+        try {
+            splash.classList.remove('visible')
+            splashScene.close()
+            aScene.play()
+            aScene.enterVR()
+        } catch(e) {
+            console.log(e)
+        }
 	});
 
     //start the audio context on click
