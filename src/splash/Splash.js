@@ -60,6 +60,7 @@ export default function initSplash(container=document.body){
 			// 	enterVRButton.setTitle('WAITING');
 			// }
             console.log('onRequestStateChange')
+            console.log(state)
 			return true;
 		},
         textEnterVRTitle: 'loading'.toUpperCase()
@@ -139,8 +140,10 @@ export default function initSplash(container=document.body){
 
 	enterVRButton.on('error', ()=>{
         console.log('enterVRButton.on.error')
+        console.log(enterVRButton.state)
 		if(enterVRButton.state === webvrui.State.ERROR_NO_PRESENTABLE_DISPLAYS || enterVRButton.state === webvrui.State.ERROR_BROWSER_NOT_SUPPORTED){
-		    createEnter360Button();
+		    console.log('createEnter360Button')
+            createEnter360Button();
 		}
 	});
 
