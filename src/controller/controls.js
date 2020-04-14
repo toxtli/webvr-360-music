@@ -28,6 +28,7 @@ export const types = {
 	GEAR: "Gear VR Controller",
 	RETICAL: "retical-controller",
 	VIVE: "OpenVR Gamepad",
+	OCULUS: "Oculus Touch",
 	OCULUS_TOUCH_LEFT: "Oculus Touch (Left)",
 	OCULUS_TOUCH_RIGHT: "Oculus Touch (Right)"
 };
@@ -42,6 +43,7 @@ const components = {
 	[types.GEAR]: 'custom-gearvr-controller',
 	[types.RETICAL]: 'retical-controller',
 	[types.VIVE]: 'custom-six-dof-controller',
+	[types.OCULUS]: 'custom-six-dof-controller',
 	[types.OCULUS_TOUCH_LEFT]: 'custom-six-dof-controller',
     [types.OCULUS_TOUCH_RIGHT]: 'custom-six-dof-controller'
 };
@@ -300,6 +302,7 @@ AFRAME.registerComponent('controls', {
 
 
 		if(changed){
+
             console.log(`controls changed ${pluck(this.pong,'type')}`)
 			//if there werent any controllers, but now there are, remove retical
 			if(!this.ping.length){
