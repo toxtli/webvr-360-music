@@ -61,6 +61,7 @@ export default function initSplash(container=document.body){
 			// }
             console.log('onRequestStateChange')
             console.log(state)
+            console.log(enterVRButton.manager.defaultDisplay)
 			return true;
 		},
         textEnterVRTitle: 'loading'.toUpperCase()
@@ -102,8 +103,10 @@ export default function initSplash(container=document.body){
 	enterVRButton.on('ready', () => {
         console.log('enterVRButton.on.ready')
 	    const display = enterVRButton.manager.defaultDisplay;
+        console.log(display)
 		if(display){
             console.log('enterVRButton.display')
+            console.log(display.displayName)
 			GA("vr-display", display.displayName);
 			aScene.setAttribute('headset', display.displayName);
 		} 
@@ -141,25 +144,20 @@ export default function initSplash(container=document.body){
 	enterVRButton.on('error', ()=>{
         console.log('enterVRButton.on.error')
         console.log(enterVRButton.state)
+        console.log(enterVRButton.manager.defaultDisplay)
         GA('ui', 'enter', 'vr');
 		if(enterVRButton.state === webvrui.State.ERROR_NO_PRESENTABLE_DISPLAYS || enterVRButton.state === webvrui.State.ERROR_BROWSER_NOT_SUPPORTED){
 		    console.log('createEnter360Button')
             createEnter360Button();
 		}
-        try {
-            splash.classList.remove('visible')
-            splashScene.close()
-            aScene.play()
-            aScene.enterVR()
-        } catch(e) {
-            console.log(e)
-        }
 	});
 
     //start the audio context on click
     if (location.hash.substr(1)) {
-        console.log('StartAudioContext')
-        StartAudioContext(Tone.context, [enterVRContainer])
+        setTimeout(() => {
+            console.log('StartAudioContext')
+            StartAudioContext(Tone.context, [enterVRContainer])
+        }, 1000)
     } else {
         console.log('NOT StartAudioContext')
     }
