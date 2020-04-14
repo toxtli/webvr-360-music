@@ -59,15 +59,17 @@ export default function initSplash(container=document.body){
 			// if(state === webvrui.State.PRESENTING){
 			// 	enterVRButton.setTitle('WAITING');
 			// }
+            console.log('onRequestStateChange')
 			return true;
 		},
         textEnterVRTitle: 'loading'.toUpperCase()
 	});
 
-    enterVRButton.domElement.addEventListener('click', () => enterVRButton.setTitle('WAITING'), true);
+    enterVRButton.domElement.addEventListener('click', () => {enterVRButton.setTitle('WAITING');console.log('enterVRButton.setTitle');}, true);
 
     //create the Enter 360 Button that is full-size and replaces Enter VR
     function createEnter360Button(){
+        console.log('createEnter360Button')
         enterVRContainer.innerHTML = '';
         const enter360 = document.createElement('button');
         enter360.classList.add('webvr-ui-button');
@@ -82,6 +84,7 @@ export default function initSplash(container=document.body){
 
 	// this can happen by "Enter 360" or "Try it in 360"
 	function onEnter360(){
+        console.log('onEnter360')
 		splash.classList.remove('visible')
 		splashScene.close()
 		aScene.play()
@@ -91,17 +94,21 @@ export default function initSplash(container=document.body){
 
 
     if(isTablet()){
+        console.log('isTablet')
         createEnter360Button();
     }
 
 	enterVRButton.on('ready', () => {
+        console.log('enterVRButton.on.ready')
 	    const display = enterVRButton.manager.defaultDisplay;
 		if(display){
+            console.log('enterVRButton.display')
 			GA("vr-display", display.displayName);
 			aScene.setAttribute('headset', display.displayName);
 		} 
 		enterVRButton.domElement.style.marginBottom = '10px';
 		if(!isTablet()) {
+            console.log('!isTablet')
             enterVRContainer.insertBefore(enterVRButton.domElement, enterVRContainer.firstChild);
         }
 		tryItIn360.style.display = 'inline-block';
@@ -109,6 +116,7 @@ export default function initSplash(container=document.body){
 
 
 	enterVRButton.on('enter',()=>{
+        console.log('enterVRButton.on.enter')
         splash.classList.remove('visible')
         splashScene.close()
 		aScene.play();
@@ -122,6 +130,7 @@ export default function initSplash(container=document.body){
 	});
 
 	enterVRButton.on('exit', ()=>{
+        console.log('enterVRButton.on.exit')
 		aScene.exitVR();
 		aScene.pause();
         splash.classList.add('visible')
@@ -129,6 +138,7 @@ export default function initSplash(container=document.body){
 	});
 
 	enterVRButton.on('error', ()=>{
+        console.log('enterVRButton.on.error')
 		if(enterVRButton.state === webvrui.State.ERROR_NO_PRESENTABLE_DISPLAYS || enterVRButton.state === webvrui.State.ERROR_BROWSER_NOT_SUPPORTED){
 		    createEnter360Button();
 		}
@@ -136,7 +146,10 @@ export default function initSplash(container=document.body){
 
     //start the audio context on click
     if (location.hash.substr(1)) {
+        console.log('StartAudioContext')
         StartAudioContext(Tone.context, [enterVRContainer])
+    } else {
+        console.log('NOT StartAudioContext')
     }
 	splashScene.start();
 
@@ -147,7 +160,9 @@ export default function initSplash(container=document.body){
         .then(()=>{
 			//now that we have a renderer, make sure webvr-ui gets the canvas
 			enterVRButton.sourceCanvas = aScene.renderer.domElement;
-			//dont run the aScene in the background
+			console.log('enterVRButton.sourceCanvas')
+            console.log(enterVRButton.sourceCanvas)
+            //dont run the aScene in the background
 			aScene.pause();
 			//add the loaded events
 			tryItIn360.addEventListener('click', onEnter360);
@@ -160,9 +175,13 @@ export default function initSplash(container=document.body){
 			enterVRContainer.classList.add('ready');
 			const always = ()=> {
                 //if WebVR is available and its not polyfill on a tablet
+                console.log('enterVRButton.state')
+                console.log(enterVRButton.state)
                 if (enterVRButton.state === webvrui.State.READY_TO_PRESENT && !(isMobile() && isTablet())) {
+                    console.log('READY_TO_PRESENT')
                     enterVRButton.setTitle('Enter VR'.toUpperCase());
                 } else if (isTablet() || (enterVRButton.state || '').indexOf('error') >= 0) {
+                    console.log('enterVRButton.isTablet')
                     document.querySelector('.webvr-ui-title').innerHTML = '<img src="./images/360_icon.svg"><span>ENTER 360</span>';
                     document.querySelector('.webvr-ui-title').classList.add('mode360')
                 }
@@ -189,15 +208,18 @@ export default function initSplash(container=document.body){
  */
 function aboutPage(about=document.querySelector('#about')){
     //open the about page
+    console.log('aboutPage')
     const openAbout = splash.querySelector('#openAbout')
     const closeAbout = splash.querySelector('#closeAbout')
 
     openAbout.addEventListener('click', () => {
+        console.log('openAbout')
         about.classList.add('visible')
         GA('ui', 'open', 'about')
     })
 
     closeAbout.addEventListener('click', () => {
+        console.log('closeAbout')
         about.classList.remove('visible')
         GA('ui', 'close', 'about')
     })
