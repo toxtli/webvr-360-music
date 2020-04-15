@@ -104,7 +104,7 @@ document.getElementById('toggleSearch').addEventListener('click', () => {
 //     }
 // });
 
-if (DeviceMotionEvent) {
+if (DeviceMotionEvent !== undefined) {
 	if (typeof DeviceMotionEvent.requestPermission === 'function') {
 	  DeviceMotionEvent.requestPermission()
 	    .then(permissionState => {
@@ -118,7 +118,7 @@ if (DeviceMotionEvent) {
 	}	
 }
 
-if (DeviceOrientationEvent) {
+if (DeviceOrientationEvent !== undefined) {
 	if (typeof DeviceOrientationEvent.requestPermission === 'function') {
 	  DeviceOrientationEvent.requestPermission()
 	    .then(permissionState => {
