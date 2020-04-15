@@ -30,7 +30,7 @@ export class Voice extends events.EventEmitter{
 		this._hadErrorLoading = false
 
 		const voFolder = './audio/vo'
-		const voServer = '//demos.hcilab.ml/audio'
+		const voServer = 'https://demos.hcilab.ml/audio'
 
 		this._players = new Players().toMaster()
 		this._players.fadeOut = 0.5
