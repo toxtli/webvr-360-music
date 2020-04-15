@@ -104,34 +104,6 @@ document.getElementById('toggleSearch').addEventListener('click', () => {
 //     }
 // });
 
-if (DeviceMotionEvent !== undefined) {
-	if (typeof DeviceMotionEvent.requestPermission === 'function') {
-	  DeviceMotionEvent.requestPermission()
-	    .then(permissionState => {
-	      if (permissionState === 'granted') {
-	        window.addEventListener('devicemotion', () => {});
-	      }
-	    })
-	    .catch(console.error);
-	} else {
-	  // handle regular non iOS 13+ devices
-	}	
-}
-
-if (DeviceOrientationEvent !== undefined) {
-	if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-	  DeviceOrientationEvent.requestPermission()
-	    .then(permissionState => {
-	      if (permissionState === 'granted') {
-	        window.addEventListener('deviceorientation', () => {});
-	      }
-	    })
-	    .catch(console.error);
-	} else {
-	  // handle regular non iOS 13+ devices
-	}
-}
-
 (function() {
 	if (!location.hash.substr(1)) {
 		var select = document.getElementById('songsList');
@@ -173,6 +145,38 @@ $('#songsList').on('change', () => {
 		document.getElementById('selectSong').setAttribute('disabled', '1');
 	}
 });
+
+try {
+	if (DeviceMotionEvent) {
+		if (typeof DeviceMotionEvent.requestPermission === 'function') {
+		  DeviceMotionEvent.requestPermission()
+		    .then(permissionState => {
+		      if (permissionState === 'granted') {
+		        window.addEventListener('devicemotion', () => {});
+		      }
+		    })
+		    .catch(console.error);
+		} else {
+		  // handle regular non iOS 13+ devices
+		}	
+	}
+} catch(e) {}
+
+try {
+	if (DeviceOrientationEvent) {
+		if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+		  DeviceOrientationEvent.requestPermission()
+		    .then(permissionState => {
+		      if (permissionState === 'granted') {
+		        window.addEventListener('deviceorientation', () => {});
+		      }
+		    })
+		    .catch(console.error);
+		} else {
+		  // handle regular non iOS 13+ devices
+		}
+	}
+} catch(e) {}
 
 // let songs = document.querySelectorAll('.song');
 // for (let song of songs) {
