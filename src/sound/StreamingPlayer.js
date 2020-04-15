@@ -140,7 +140,7 @@ export class StreamingPlayer extends events.EventEmitter {
 
 	trackName(){
 		//let audioPath = './audio'
-		let audioPath = 'http://demos.hcilab.ml/audio'
+		let audioPath = '//demos.hcilab.ml/audio'
 		return `${audioPath}/${this.folder}/${this.track}-${this.segment}.[mp3|ogg]`
 	}
 
