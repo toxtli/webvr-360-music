@@ -3,14 +3,16 @@
 //setTimeout(()=>{
 let hash = location.hash.substr(1);
 if (hash) {
-	document.getElementById('enter-vr-container').style.visibility = 'visible';
+	document.getElementById('enter-vr-container').style.display = 'inline-block';
+	document.getElementById('enter-mobile-container').style.display = 'inline-block';
 	document.getElementById('songSection').style.display = 'none';
 	document.getElementById('goBack').style.display = 'block';
 	//document.querySelector('.webvr-ui-button').click();
 } else {
 	document.getElementById('songSection').style.display = 'block';
 	document.getElementById('goBack').style.display = 'none';
-	document.getElementById('enter-vr-container').style.visibility = 'hidden';
+	document.getElementById('enter-vr-container').style.display = 'none';
+	document.getElementById('enter-mobile-container').style.display = 'none';
 	//document.getElementById('enter-vr-container').style.visibility = 'hidden';
 }
 //}, 100);
