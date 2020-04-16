@@ -141,7 +141,7 @@
 			<div id="songSection">
 				<div id="songList">
 					<div>
-						You can select a song previously transformed by other users.
+						You can select a song previously converted by other users.
 					</div>
 					<button id="toggleSearch" class="btn"><i class="fa fa-search"></i></button>
 					<select id="songsList">
@@ -151,30 +151,34 @@
 				</div>
 				<br>
 				<div>
-					============= OR =============
+					====== OR ======
 				</div>
 				<br>
 				<div id="songForm">
 					<div>
-						Paste a Youtube URL to be converted (takes time, we will email you when done)
+						Paste a Youtube URL to be converted (we'll email you when done)
 					</div>
-					<div id="bands">
-						<span>
-							Youtube URL
-						</span>
-						<span>
-							<input type="text" id="url" name="url" size="48" placeholder="https://www.youtube.com/watch?v=[VIDEO_ID]">
-						</span>
-						<br>
-						<span>
-							Email
-						</span>
-						<span>
-							<input type="email" id="email" name="email" size="20" placeholder="your@email.com">
-						</span>
-						<span>
-							<button id="sendButton">transform</button>
-						</span>
+					<br>
+					<div id="bands2">
+						<div>
+							<span>
+								Youtube URL:
+							</span>
+							<span>
+								<input class="inputText" type="text" id="url" name="url" size="42" placeholder="https://www.youtube.com/watch?v=[VIDEO_ID]">
+							</span>
+						</div>
+						<div>
+							<span>
+								Email:
+							</span>
+							<span>
+								<input class="inputText" type="email" id="email" name="email" size="20" placeholder="your@email.com">
+							</span>
+							<span>
+								<button id="sendButton">CONVERT</button>
+							</span>
+						</div>
 					</div>
 					<div id="formMsg"></div>
 				</div>
@@ -186,10 +190,17 @@
 					Click in the button below to play the song.
 				</div>
 			</div>
-
+			<br>
+			<div>
+				<a id="enable-motion" style="display: none;" href="javascript:void(0);">Click here first to enable the device motion</a>
+				<button id="try-it-in-360" class="webvr-ui-button" title="TRY IT IN 360" style="display: none; margin-bottom: 10px;">
+		          <div class="webvr-ui-title" style="display: initial;">RUN IN BROWSER</div>
+		          <div class="webvr-ui-logo"><img src="./images/360_icon.svg" height="40"></div>
+		        </button>
+	    	</div>
 			<div id="enter-vr-container" style="color: #ffffff">
-				<br>
-				<a id="try-it-in-360" style="display: none;" href="javascript:void(0);">try it in 360</a>
+				<!-- <div id="try-it-in-360" class="webvr-ui-title" style="padding: 0;">try it in 360</div> -->
+				<!-- <a id="try-it-in-360" style="display: none;" href="javascript:void(0);">try it in 360</a> -->
 			</div>
 			<!--
 			<button id="enable-motion">Enable Sensors</button>

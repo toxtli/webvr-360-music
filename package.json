@@ -9,7 +9,6 @@
     "start": "http-server",
     "restart": "npm run build && http-server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "npm install && npm run build && http-server",
     "deploy": "npm run predeploy && ghpages git@github.com:toxtli/webvr-360-music.git -p .ghpages && rm -rf .ghpages",
     "predeploy": "npm run build && shx mkdir -p .ghpages && cp -r index.html build js css images audio CNAME .ghpages"
   },

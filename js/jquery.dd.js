@@ -290,7 +290,7 @@ function dd(element, settings) {
 		};
 		var intcss = getInternalStyle(getElement(element));
 		var w = $("#" + element).outerWidth();
-		obj.style = "width: " + w + "px;";
+		//obj.style = "width: " + w + "px;";
 		if (intcss.length > 0) {
 			obj.style = obj.style + "" + intcss;
 		};

@@ -155,12 +155,12 @@ $landscapeHeight: 420px;
 			display: block;
 			margin-left: auto;
 			margin-right: auto;
-			margin-top: 50px;
+			margin-top: 10px;
 			min-width: $enterVRWidth;
 			min-height: $enterVRHeight;
 
 			@media (max-width: $tabletWidth){
-				margin-top: 30px;
+				margin-top: 10px;
 			}
 
 			@media (max-height: $landscapeHeight){

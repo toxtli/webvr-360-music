@@ -43,6 +43,7 @@ export default function initSplash(container=document.body){
 	const splash = container.querySelector('#splash')
 	//this link is for when VR is available but user might want 360 instead
 	const tryItIn360 = document.getElementById('try-it-in-360');
+    const enableMotion = document.getElementById('enable-motion');
 	//holds the buttons
 	const enterVRContainer = splash.querySelector('#enter-vr-container');
     //the splash threejs scene
@@ -80,6 +81,7 @@ export default function initSplash(container=document.body){
         enterVRContainer.appendChild(enter360);
         enter360.addEventListener('click', onEnter360);
         tryItIn360.style.display = 'none';
+        enableMotion.style.display = 'none';
         GA("vr-display", "none");
         return enter360;
     }
@@ -116,6 +118,7 @@ export default function initSplash(container=document.body){
             enterVRContainer.insertBefore(enterVRButton.domElement, enterVRContainer.firstChild);
         }
 		tryItIn360.style.display = 'inline-block';
+        enableMotion.style.display = 'inline-block';
 	});
 
 
