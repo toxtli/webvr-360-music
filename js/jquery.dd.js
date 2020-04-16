@@ -290,7 +290,7 @@ function dd(element, settings) {
 		};
 		var intcss = getInternalStyle(getElement(element));
 		var w = $("#" + element).outerWidth();
-		obj.style = "width: " + w + "px;";
+		//obj.style = "width: " + w + "px;";
 		if (intcss.length > 0) {
 			obj.style = obj.style + "" + intcss;
 		};
@@ -716,7 +716,7 @@ function dd(element, settings) {
 		//auto filter
 		var tid = getPostID("postTitleTextID");
 		if(settings.enableAutoFilter=="true") {
-			$("#" + tid).on("keyup", applyFilters);
+			$("#" + tid).on("input", applyFilters);
 		};
 		//if is list
 		fixedForList();
@@ -887,9 +887,9 @@ function dd(element, settings) {
 		$(document).off("keyup", on_keyup);
 	};
 	var applyFilters = function (e) {
-		if(e.keyCode < ALPHABETS_START && e.keyCode!=BACKSPACE && e.keyCode!=DELETE) {
-			return false;
-		};
+		// if(e.keyCode < ALPHABETS_START && e.keyCode!=BACKSPACE && e.keyCode!=DELETE) {
+		// 	return false;
+		// };
 		var childid = getPostID("postChildID");
 		var tid = getPostID("postTitleTextID");
 		var sText = getElement(tid).value;
@@ -1585,6 +1585,9 @@ function dd(element, settings) {
 	this.refresh = function() {
 		setValue(getElement(element).selectedIndex);
 	};
+
+	this.showFilterBox = showFilterBox;
+	this.hideFilterBox = hideFilterBox;
 	//Create msDropDown	
 	init();
 };

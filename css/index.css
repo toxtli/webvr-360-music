@@ -1,0 +1,37 @@
+#formMsg {color:#AAAAFF;}
+
+
+#songsList_msdd {
+	width: 70%;
+}
+
+#sendButton {
+	height: 28px;
+	font-size: 24px;
+	width: 100px;
+	font-family: DIN Condensed;
+	border-radius: 12px;
+  	background: gray;
+  	color: white;
+  	text-transform: uppercase;
+}
+
+.inputText {
+	height: 28px;
+	font-size: 14px;
+	margin: 2px;
+}
+
+.btn {
+  background-color: gray;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Darker background on mouse-over */
+.btn:hover {
+  background-color: black;
+}
