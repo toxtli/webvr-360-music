@@ -71,7 +71,7 @@ if (navigator.permissions) {
 	document.getElementById('pasteSection').removeAttribute('hidden');
 	document.getElementById('pasteButton').addEventListener('click', () => {
 		console.log('PASTE');
-		navigator.permissions.query({name: "clipboardRead"}).then(result => {
+		navigator.permissions.query({name: "clipboard-read"}).then(result => {
 		  console.log(result.state);
 		  if (result.state == "granted" || result.state == "prompt") {
 		    //document.getElementById('url').focus();
