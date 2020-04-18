@@ -7,12 +7,14 @@ if (hash) {
 	document.getElementById('enter-mobile-container').style.display = 'inline-block';
 	document.getElementById('songSection').style.display = 'none';
 	document.getElementById('goBack').style.display = 'block';
+	document.getElementById('description').style.display = 'none';
 	//document.querySelector('.webvr-ui-button').click();
 } else {
 	document.getElementById('songSection').style.display = 'block';
 	document.getElementById('goBack').style.display = 'none';
 	document.getElementById('enter-vr-container').style.display = 'none';
 	document.getElementById('enter-mobile-container').style.display = 'none';
+	document.getElementById('description').style.display = 'block';
 	//document.getElementById('enter-vr-container').style.visibility = 'hidden';
 }
 //}, 100);

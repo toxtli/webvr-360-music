@@ -77,7 +77,7 @@ export default function initSplash(container=document.body){
         const enter360 = document.createElement('button');
         enter360.classList.add('webvr-ui-button');
         enter360.style.color = 'white';
-        enter360.innerHTML = `<div class="webvr-ui-title" style="padding: 0;">ENTER VR</div>`;
+        enter360.innerHTML = `<div class="webvr-ui-title" style="padding: 0;">ENTER 360</div>`;
         enterVRContainer.appendChild(enter360);
         enter360.addEventListener('click', onEnter360);
         tryItIn360.style.display = 'none';
