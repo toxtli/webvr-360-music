@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Inside Music Youtube Edition</title>
+	<title>Inside Music - Youtube Edition</title>
 
 	<meta name="og:title" content="Song Exploder Presents: Inside Music">
 	<meta name="og:image" content="images/thumbnail.png">
@@ -135,9 +135,14 @@
 	<div id="splash" class="visible">
 		<canvas id="splash-canvas"></canvas>
 		<div id="splash-container">
-			<h1 id="title">INSIDE MUSIC</h1>
-			<p id="featuring">Addapted by Carlos Toxtli</p>
+			<div id="title">INSIDE MUSIC</div>
+			<div id="subtitle">YOUTUBE EDITION</div>
+			
 			<div id="debugMsg"></div>
+			<div id="description">
+				This AI tool separates instruments from a YouTube song and places them around a room to provide an immersive experience for users in a desktop / mobile browser or with VR headsets. The original version was created by Song Exploder and Google Creative Lab.
+			</div>
+			<br>
 			<div id="songSection">
 				<div id="songList">
 					<div>
@@ -149,16 +154,13 @@
 					</select>
 					<button id="selectSong" class="btn"><i class="fa fa-play"></i></button>
 				</div>
-				<br>
-				<div>
+				<div style="padding-top: 10px; padding-bottom: 10px;">
 					====== OR ======
 				</div>
-				<br>
 				<div id="songForm">
 					<div>
 						Paste a Youtube URL to be converted (we'll email you when done)
 					</div>
-					<br>
 					<div id="bands2">
 						<div>
 							<span>
@@ -221,9 +223,12 @@
 		</div>
 
 		<div id="terms">
-			<a href="https://www.google.com/intl/en/policies/privacy/" target="_blank">Privacy</a>
+			<!-- <a href="https://experiments.withgoogle.com/inside-music">
+				Visit the original version
+			</a> -->
+			<!-- <a href="https://www.google.com/intl/en/policies/privacy/" target="_blank">Privacy</a>
 			&amp;
-			<a href="https://www.google.com/intl/en/policies/terms/" target="_blank">Terms</a>
+			<a href="https://www.google.com/intl/en/policies/terms/" target="_blank">Terms</a> -->
 		</div>
 
 		<div id="openAbout" class="aboutButton"></div>
@@ -235,22 +240,26 @@
 		<div id="about">
 			<div id="closeAbout" class="aboutButton"></div>
 			<div id="content">
-				<h2 id="aboutTitle">SONG EXPLODER PRESENTS: INSIDE MUSIC</h2>
+				<h2 id="aboutTitle">INSIDE MUSIC - YOUTUBE EDITION</h2>
 
 				<p>
 				What if you could step inside a song? This is a simple experiment that explores that idea. See and hear the individual layers of music all around you to get a closer look at how music is made.
 				</p>
 
 				<p>
-					It's built with WebVR and spatial audio. We've open-sourced the code so that you can explore your own music in VR. <a href="https://github.com/googlecreativelab/inside-music" target="_blank">Learn more on our Github page</a>. And check out more WebVR Experiments <a href="https://experiments.withgoogle.com/webvr" target="_blank">here</a>.
+				It's built with WebVR and spatial audio. Thanks to <a target="_blank" href="http://songexploder.net/">Song Exploder</a> and <a href="https://thefwa.com/profiles/google-creative-lab">Google Creative Lab</a> for open-sourcing their code we could adapt it to allow you to explore your own music in VR. Learn more on the <a href="https://github.com/googlecreativelab/inside-music" target="_blank"> original GitHub project</a> and the <a target="_blank" href="https://github.com/toxtli/webvr-360-music">YouTube edition code</a>. And check out more WebVR Experiments <a href="https://experiments.withgoogle.com/webvr" target="_blank">here</a>. Please send us any feedback to <a href="mailto:demos@hcilab.ml">demos@hcilab.ml</a>.
 				</p>
 
-				<h2 id="aboutTitle">BIG THANKS TO OUR ARTISTS</h2>
+				<h2 id="aboutTitle">BIG THANKS TO ALL THE FREE AND OPEN SOURCE COMPONENTS OF THIS SOLUTION</h2>
 
-				<div id="artists"></div>
+				<p>
+				This project was developed using <a target="_blank" href="https://aframe.io/">AFrame</a>, <av target="_blank" href="https://tonejs.github.io/">Tone.js</a>, <a target="_blank" href="https://threejs.org/">Three.js</a>, and <a target="_blank" href="https://github.com/deezer/spleeter">Spleeter</a> among other open-source libraries. I want to especially thank the Google technologies that made this possible, such as <a target="_blank" href="https://www.google.com/drive/">Google Drive</a>, <a target="_blank" href="https://developers.google.com/apps-script">Google Apps Script</a> and <a target="_blank" href="https://colab.research.google.com/">Google Colaboratory</a>, which are the pieces behind the magic. Some students with limited resources (like me) hesitate to develop complex platforms for the cost of maintaining them, but thanks to these technologies we can offer services like this for free. In the future, I would like to host the platform in an infrastructure that can convert and reproduce a song immediately, so <a target="_blank" href="https://www.paypal.me/Toxtli">I am open to donations to make this happen</a>.
+				</p>
 
-				<p class="bandLink">
-					<a target="_blank" href="http://songexploder.net/">Song Exploder</a> is a podcast where musicians take apart their songs, and piece by piece, tell the story of how they were made. Each episode combines an interview with an artist with the isolated, individual tracks within one of their songs. Host Hrishikesh Hirway asks the artists to guide listeners through the different sounds and their creative decisions.
+				<h2 id="aboutTitle">ABOUT ME - CARLOS TOXTLI</h2>
+
+				<p>
+				My name is <a target="_blank" href="http://www.carlostoxtli.com">Carlos Toxtli</a>. I am an enthusiastic person who loves great challenges, since my childhood I dreamed of having a 3D audio studio with sounds coming from everywhere and bouncing around in a room. When I started working, I installed a home theater sound system in my car and composed music for 5.1 channels (6 speakers) to play surround music there, then I composed for 7.1 channels (8 speakers) and then for 28.4 channels (32 speakers). Currently, <a target="_blank" href="https://en.wikipedia.org/wiki/Ambisonics">spatial audio</a> allows us to have the same 3D experience as normal headphones, so I decided to give everyone the opportunity to experience that immersive experience from any device. I've also developed other AI music technologies like <a target="_blank" href="https://www.carlostoxtli.com/hum2song/">Hum2Song</a> that turns a hum into a song. I want to meet more like-minded people with whom we can create some crazy projects (I'm currently working on the sequel to this project with sounds that dynamically move around the environment). As a Ph.D. Candidate about to graduate <a target="_blank" href="http://www.carlostoxtli.com">I am available to be hired (this is my CV)</a>, so I would love to participate in any AI project where I can give some value. I dedicate this work to my loved family as a continous source of inspiration and support.
 				</p>
 
 			</div>

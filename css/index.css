@@ -1,8 +1,17 @@
 #formMsg {color:#AAAAFF;}
 
+.separator {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 
 #songsList_msdd {
 	width: 70%;
+}
+
+#description {
+  width: 90%;
+  font-size: 14px;
 }
 
 #sendButton {
@@ -14,6 +23,13 @@
   	background: gray;
   	color: white;
   	text-transform: uppercase;
+}
+
+#subtitle {
+  font-size: 32px;
+  font-family: DIN Condensed;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 .inputText {

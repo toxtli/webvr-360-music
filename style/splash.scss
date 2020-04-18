@@ -47,6 +47,7 @@ $landscapeHeight: 420px;
 		#title {
 			font-size: 110px;
 			margin-bottom: 0px;
+			margin-bottom: -20px;
 
 			@media (max-width: $tabletWidth){
 				font-size: 75px;
@@ -56,7 +57,7 @@ $landscapeHeight: 420px;
 			}
 
 			@media (max-height: $landscapeHeight), (max-width: $phoneWidth){
-				font-size: 63px;
+				font-size: 64px;
 
 				&:before {
 					top: 20px!important;
@@ -72,11 +73,11 @@ $landscapeHeight: 420px;
 			}
 
 			&:before {
-				content: "Youtube to 360 Music";
+				content: "";
 				position: absolute;
 				width: 100%;
 				left: 50%;
-				top: 40px;
+				top: 10px;
 			    font-size: 0.3em;
 				transform: translate(-50%, -50%);
 			}
@@ -406,7 +407,7 @@ $landscapeHeight: 420px;
 		right: $margin;
 		color: white;
 		font-size: 11px;
-		width: 81px;
+		width: 150px;
 
 		@media (max-width: $tabletWidth), (max-height: $landscapeHeight){
 			bottom: $smallMargin;
