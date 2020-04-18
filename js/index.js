@@ -67,7 +67,7 @@ document.getElementById('selectSong').addEventListener('click', () => {
 	}
 });
 
-if (navigator.permissions) {
+if (navigator.permissions && navigator.clipboard && navigator.clipboard.readText) {
 	document.getElementById('pasteSection').removeAttribute('hidden');
 	document.getElementById('pasteButton').addEventListener('click', () => {
 		console.log('PASTE');
