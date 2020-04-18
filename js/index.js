@@ -67,6 +67,18 @@ document.getElementById('selectSong').addEventListener('click', () => {
 	}
 });
 
+document.getElementById('pasteButton').addEventListener('click', () => {
+	console.log('PASTE');
+	navigator.permissions.query({name: "clipboard-read"}).then(result => {
+	  console.log(result.state);
+	  if (result.state == "granted" || result.state == "prompt") {
+	    //document.getElementById('url').focus();
+  		//document.execCommand("paste");
+		navigator.clipboard.readText().then(text => document.getElementById('url').innerText = text);
+	  }
+	});
+});
+
 var filterOn = false;
 document.getElementById('toggleSearch').addEventListener('click', () => {
 	if (filterOn) {
