@@ -74,7 +74,7 @@ document.getElementById('pasteButton').addEventListener('click', () => {
 	  if (result.state == "granted" || result.state == "prompt") {
 	    //document.getElementById('url').focus();
   		//document.execCommand("paste");
-		navigator.clipboard.readText().then(text => document.getElementById('url').innerText = text);
+		navigator.clipboard.readText().then(text => document.getElementById('url').value = text);
 	  }
 	});
 });
