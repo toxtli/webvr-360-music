@@ -59,7 +59,7 @@ document.getElementById('sendButton').addEventListener('click', () => {
 document.getElementById('selectSong').addEventListener('click', () => {
 	var select = document.getElementById('songsList');
 	if (select.value) {
-		var hashUrl = '/#'+ select.value;
+		var hashUrl = '#'+ select.value;
 		window.location.href = hashUrl;
 		location.reload();
 	}
