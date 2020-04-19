@@ -34,7 +34,7 @@ document.getElementById('sendButton').addEventListener('click', () => {
 			console.log('PROCESSING SONG');
 			urlArr.push(email);
 			//serverUrl += encodeURI(youtubeUrl);
-			serverUrl += encodeURI(JSON.stringify(urlArr));
+			serverUrl += encodeURIComponent(JSON.stringify(urlArr));
 			console.log(serverUrl);
 			fetch(serverUrl)
 				.then((response) => {
