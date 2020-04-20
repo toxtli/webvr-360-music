@@ -65,7 +65,7 @@ export default function initSplash(container=document.body){
             console.log(enterVRButton.manager.defaultDisplay)
 			return true;
 		},
-        textEnterVRTitle: 'loading'.toUpperCase()
+        textEnterVRTitle: 'ENTER VR'.toUpperCase()
 	});
 
     enterVRButton.domElement.addEventListener('click', () => {enterVRButton.setTitle('WAITING');console.log('enterVRButton.setTitle');}, true);
