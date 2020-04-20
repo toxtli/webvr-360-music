@@ -332,7 +332,7 @@ AFRAME.registerComponent('controls', {
         //document.getElementById('butMes').innerHTML = '3';
 
         if(!changed || !this.pong.length){
-        	//this.el.setAttribute(components[types.VIVE], 'numberOfControllers: ' + 2);
+        	this.el.setAttribute(components[types.VIVE], 'numberOfControllers: ' + 2);
         	return;
 		}
 
