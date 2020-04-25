@@ -3,14 +3,18 @@
 //setTimeout(()=>{
 let hash = location.hash.substr(1);
 if (hash) {
-	document.getElementById('enter-vr-container').style.visibility = 'visible';
+	document.getElementById('enter-vr-container').style.display = 'inline-block';
+	document.getElementById('enter-mobile-container').style.display = 'inline-block';
 	document.getElementById('songSection').style.display = 'none';
 	document.getElementById('goBack').style.display = 'block';
+	document.getElementById('description').style.display = 'none';
 	//document.querySelector('.webvr-ui-button').click();
 } else {
 	document.getElementById('songSection').style.display = 'block';
 	document.getElementById('goBack').style.display = 'none';
-	document.getElementById('enter-vr-container').style.visibility = 'hidden';
+	document.getElementById('enter-vr-container').style.display = 'none';
+	document.getElementById('enter-mobile-container').style.display = 'none';
+	document.getElementById('description').style.display = 'block';
 	//document.getElementById('enter-vr-container').style.visibility = 'hidden';
 }
 //}, 100);
@@ -30,7 +34,7 @@ document.getElementById('sendButton').addEventListener('click', () => {
 			console.log('PROCESSING SONG');
 			urlArr.push(email);
 			//serverUrl += encodeURI(youtubeUrl);
-			serverUrl += encodeURI(JSON.stringify(urlArr));
+			serverUrl += encodeURIComponent(JSON.stringify(urlArr));
 			console.log(serverUrl);
 			fetch(serverUrl)
 				.then((response) => {
@@ -62,6 +66,21 @@ document.getElementById('selectSong').addEventListener('click', () => {
 		location.reload();
 	}
 });
+
+if (navigator.permissions && navigator.clipboard && navigator.clipboard.readText) {
+	document.getElementById('pasteSection').removeAttribute('hidden');
+	document.getElementById('pasteButton').addEventListener('click', () => {
+		console.log('PASTE');
+		navigator.permissions.query({name: "clipboard-read"}).then(result => {
+		  console.log(result.state);
+		  if (result.state == "granted" || result.state == "prompt") {
+		    //document.getElementById('url').focus();
+	  		//document.execCommand("paste");
+			navigator.clipboard.readText().then(text => document.getElementById('url').value = text);
+		  }
+		});
+	});
+}
 
 var filterOn = false;
 document.getElementById('toggleSearch').addEventListener('click', () => {

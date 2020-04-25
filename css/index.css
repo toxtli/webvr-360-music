@@ -1,8 +1,17 @@
 #formMsg {color:#AAAAFF;}
 
+.separator {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 
 #songsList_msdd {
 	width: 70%;
+}
+
+#description {
+  width: 90%;
+  font-size: 12px;
 }
 
 #sendButton {
@@ -14,6 +23,13 @@
   	background: gray;
   	color: white;
   	text-transform: uppercase;
+}
+
+#subtitle {
+  font-size: 32px;
+  font-family: DIN Condensed;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 .inputText {
@@ -33,5 +49,19 @@
 
 /* Darker background on mouse-over */
 .btn:hover {
-  background-color: black;
+  background-color: '#222222';
+}
+
+.btn2 {
+  background-color: gray;
+  border: none;
+  color: white;
+  padding: 6px 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Darker background on mouse-over */
+.btn2:hover {
+  background-color: '#222222';
 }

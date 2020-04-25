@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Inside Music Youtube Edition</title>
+	<title>Inside Music - Youtube Edition</title>
 
-	<meta name="og:title" content="Song Exploder Presents: Inside Music">
+	<meta name="og:title" content="Inside Music - Youtube Edition">
 	<meta name="og:image" content="images/thumbnail.png">
-	<meta name="og:description" content="Step inside the music of Phoenix, Perfume Genius, Ibeyi, Natalia LaFourcade, Alarm Will Sound, and Clipping.">
-	<meta name="og:url" content="https://experiments.withgoogle.com/webvr/inside-music/view">
+	<meta name="og:description" content="Step inside the music of YouTube.">
+	<meta name="og:url" content="https://3dyt.hcilab.ml">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-	<meta name="description" content="Step inside the music of Phoenix, Perfume Genius, Ibeyi, Natalia LaFourcade, Alarm Will Sound, and Clipping.">
+	<meta name="description" content="Step inside the music of YouTube.">
 	<!-- Origin Trial Token, feature = WebVR (For Chrome M59+), origin = https://cl-alarm-will-sound.appspot.com, expires = 2017-09-27 -->
 	<meta http-equiv="origin-trial" data-feature="WebVR (For Chrome M59+)" data-expires="2017-09-27" content="AltrzeyvhIFNsBOONfP4N989N4wsrkByyOnwHav9zo/NIos39CaDJmoklm2lT02lQbb1XKnFzmrDPi7K8QKVZwcAAAB0eyJvcmlnaW4iOiJodHRwczovL2NsLWFsYXJtLXdpbGwtc291bmQuYXBwc3BvdC5jb206NDQzIiwiZmVhdHVyZSI6IldlYlZSMS4xIiwiZXhwaXJ5IjoxNTA2NTI3MDE3LCJpc1N1YmRvbWFpbiI6dHJ1ZX0=">
 
@@ -135,9 +135,14 @@
 	<div id="splash" class="visible">
 		<canvas id="splash-canvas"></canvas>
 		<div id="splash-container">
-			<h1 id="title">INSIDE MUSIC</h1>
-			<p id="featuring">Addapted by Carlos Toxtli</p>
+			<div id="title">INSIDE MUSIC</div>
+			<div id="subtitle">YOUTUBE EDITION</div>
+			
 			<div id="debugMsg"></div>
+			<div id="description">
+				This AI tool separates instruments from a YouTube song and places them around a room to provide an immersive experience for users in a desktop / mobile browser or with VR headsets. The <a target="_blank" href="https://experiments.withgoogle.com/inside-music">original version</a> was created by <a target="_blank" href="http://songexploder.net/">Song Exploder</a> and <a target="_blank" href="https://thefwa.com/">Google Creative Lab</a>.
+			</div>
+			<br>
 			<div id="songSection">
 				<div id="songList">
 					<div>
@@ -149,23 +154,23 @@
 					</select>
 					<button id="selectSong" class="btn"><i class="fa fa-play"></i></button>
 				</div>
-				<br>
-				<div>
+				<div style="padding-top: 10px; padding-bottom: 10px;">
 					====== OR ======
 				</div>
-				<br>
 				<div id="songForm">
 					<div>
 						Paste a Youtube URL to be converted (we'll email you when done)
 					</div>
-					<br>
 					<div id="bands2">
 						<div>
 							<span>
 								Youtube URL:
 							</span>
 							<span>
-								<input class="inputText" type="text" id="url" name="url" size="42" placeholder="https://www.youtube.com/watch?v=[VIDEO_ID]">
+								<input class="inputText" type="text" id="url" name="url" size="40" placeholder="https://www.youtube.com/watch?v=[VIDEO_ID]">
+							</span>
+							<span id="pasteSection" hidden>
+								<button id="pasteButton" class="btn2"><i class="fa fa-paste"></i></button>
 							</span>
 						</div>
 						<div>
@@ -191,13 +196,14 @@
 				</div>
 			</div>
 			<br>
-			<div>
-				<a id="enable-motion" style="display: none;" href="javascript:void(0);">Click here first to enable the device motion</a>
-				<button id="try-it-in-360" class="webvr-ui-button" title="TRY IT IN 360" style="display: none; margin-bottom: 10px;">
-		          <div class="webvr-ui-title" style="display: initial;">RUN IN BROWSER</div>
+			<div id="enter-mobile-container">
+				<a id="enable-motion" style="display: none;" href="javascript:void(0);">Click here to enable motion on mobile devices</a><br>
+				<button id="try-it-in-360" class="webvr-ui-button" title="BROWSER MODE" style="display: none; margin-bottom: 10px;">
+		          <div class="webvr-ui-title" style="display: initial;">BROWSER MODE</div>
 		          <div class="webvr-ui-logo"><img src="./images/360_icon.svg" height="40"></div>
 		        </button>
 	    	</div>
+	    	<br>
 			<div id="enter-vr-container" style="color: #ffffff">
 				<!-- <div id="try-it-in-360" class="webvr-ui-title" style="padding: 0;">try it in 360</div> -->
 				<!-- <a id="try-it-in-360" style="display: none;" href="javascript:void(0);">try it in 360</a> -->
@@ -221,9 +227,12 @@
 		</div>
 
 		<div id="terms">
-			<a href="https://www.google.com/intl/en/policies/privacy/" target="_blank">Privacy</a>
+			Adapted by <a href="https://www.carlostoxtli.coom">
+				Carlos Toxtli
+			</a>
+			<!-- <a href="https://www.google.com/intl/en/policies/privacy/" target="_blank">Privacy</a>
 			&amp;
-			<a href="https://www.google.com/intl/en/policies/terms/" target="_blank">Terms</a>
+			<a href="https://www.google.com/intl/en/policies/terms/" target="_blank">Terms</a> -->
 		</div>
 
 		<div id="openAbout" class="aboutButton"></div>
@@ -235,22 +244,48 @@
 		<div id="about">
 			<div id="closeAbout" class="aboutButton"></div>
 			<div id="content">
-				<h2 id="aboutTitle">SONG EXPLODER PRESENTS: INSIDE MUSIC</h2>
+				<h2 id="aboutTitle">FREQUENT ASKED QUESTIONS</h2>
+
+				<p>
+				What devices are supported?
+				<br>
+				Desktop browsers: It has been only tested on Google Chrome, Safari, and Firefox. Other browsers should work.
+				Mobile browsers: It has been only tested on Google Chrome, Safari, and Firefox. Other mobile browsers should work.
+				VR Headsets: It has been tested on Oculus Quest, but other mobile based and standalone platform should work.
+				<br><br>
+				How do I exit the song interface on VR devices?
+				<br>
+				Every VR device has an exit button in their controls (in Oculus Quest is the left hand menu button).
+				<br><br>
+				What should I do if I did not get the transformed URL via email?
+				<br>
+				After some hours try searching the song in the main screen listing, if it is not listed try sending us an email with your YouTube URL to <a href="mailto:demos@hcilab.ml">demos@hcilab.ml</a>.
+				<br><br> 
+				How can I contribute to the project or give feedback?
+				<br>
+				You can contribute via the <a target="_blank" href="https://github.com/toxtli/webvr-360-music">GitHub project</a>. You can send feedback via this email: <a href="mailto:demos@hcilab.ml">demos@hcilab.ml</a>.
+				</p>
+
+				<h2 id="aboutTitle">INSIDE MUSIC - YOUTUBE EDITION</h2>
 
 				<p>
 				What if you could step inside a song? This is a simple experiment that explores that idea. See and hear the individual layers of music all around you to get a closer look at how music is made.
 				</p>
 
 				<p>
-					It's built with WebVR and spatial audio. We've open-sourced the code so that you can explore your own music in VR. <a href="https://github.com/googlecreativelab/inside-music" target="_blank">Learn more on our Github page</a>. And check out more WebVR Experiments <a href="https://experiments.withgoogle.com/webvr" target="_blank">here</a>.
+				It's built with WebVR and spatial audio. Thanks to <a target="_blank" href="http://songexploder.net/">Song Exploder</a> and <a href="https://thefwa.com/profiles/google-creative-lab">Google Creative Lab</a> for open-sourcing their code we could adapt it to allow you to explore your own music in VR. Learn more on the <a href="https://github.com/googlecreativelab/inside-music" target="_blank"> original GitHub project</a> and the <a target="_blank" href="https://github.com/toxtli/webvr-360-music">YouTube edition code</a>. And check out more WebVR Experiments <a href="https://experiments.withgoogle.com/webvr" target="_blank">here</a>. Please send us any feedback to <a href="mailto:demos@hcilab.ml">demos@hcilab.ml</a>.
 				</p>
 
-				<h2 id="aboutTitle">BIG THANKS TO OUR ARTISTS</h2>
+				<h2 id="aboutTitle">BIG THANKS TO ALL THE FREE AND OPEN SOURCE COMPONENTS OF THIS SOLUTION</h2>
 
-				<div id="artists"></div>
+				<p>
+				This web app was developed by using <a target="_blank" href="https://aframe.io/">AFrame</a>, <a target="_blank" href="https://tonejs.github.io/">Tone.js</a>, and <a target="_blank" href="https://threejs.org/">Three.js</a> among other open-source libraries. The backend automation was possible thanks to free platforms and libraries such as <a target="_blank" href="https://github.com/deezer/spleeter">Spleeter</a>, <a target="_blank" href="https://colab.research.google.com/">Google Colaboratory</a>, <a target="_blank" href="https://developers.google.com/apps-script">Google Apps Script</a>, <a target="_blank" href="https://www.google.com/drive/">Google Drive</a>, <a target="_blank" href="https://drv.tw/">DriveToWeb</a>, <a target="_blank" href="https://www.freenom.com/">Freenom</a> <a target="_blank" href="https://www.cloudflare.com/">CloudFare</a>, <a target="_blank" href="https://www.docker.com/">Docker</a>, <a target="_blank" href="https://www.selenium.dev/">Selenium</a>, <a target="_blank" href="https://www.heroku.com/">Heroku</a>, <a target="_blank" href="https://ngrok.com/">Ngrok</a>, among many others that are behind the magic. Some students with limited resources (like me) hesitate to develop complex platforms for the cost of maintaining them, but thanks to these technologies we can offer services like this for free. In the future, I would like to host the platform in a dedicated infrastructure that can convert and reproduce a song immediately and without worring about free quotas, so <a target="_blank" href="https://www.paypal.me/Toxtli">I am open to donations to make this happen</a>.
+				</p>
 
-				<p class="bandLink">
-					<a target="_blank" href="http://songexploder.net/">Song Exploder</a> is a podcast where musicians take apart their songs, and piece by piece, tell the story of how they were made. Each episode combines an interview with an artist with the isolated, individual tracks within one of their songs. Host Hrishikesh Hirway asks the artists to guide listeners through the different sounds and their creative decisions.
+				<h2 id="aboutTitle">ABOUT ME - CARLOS TOXTLI</h2>
+
+				<p>
+				My name is <a target="_blank" href="http://www.carlostoxtli.com">Carlos Toxtli</a>. I am an enthusiastic person who loves great challenges, since my childhood I dreamed of having a 3D audio studio with sounds coming from everywhere and bouncing around in a room. When I started working, I installed a home theater sound system in my car and composed music for 5.1 channels (6 speakers) to play surround music there, then I composed for 7.1 channels (8 speakers) and then for 28.4 channels (32 speakers). Currently, <a target="_blank" href="https://en.wikipedia.org/wiki/Ambisonics">spatial audio</a> allows us to have the same 3D experience as normal headphones, so I decided to give everyone the opportunity to experience that immersive experience from any device. I've also developed other AI music technologies like <a target="_blank" href="https://www.carlostoxtli.com/hum2song/">Hum2Song</a> that turns a hum into a song. I want to meet more like-minded people with whom we can create some crazy projects (I'm currently working on the sequel to this project with sounds that dynamically move around the environment). As a Ph.D. Candidate about to graduate <a target="_blank" href="http://www.carlostoxtli.com">I am available to be hired (this is my CV)</a>, so I would love to participate in any AI project where I can give some value. I dedicate this work to my loved family as a continous source of inspiration and support.
 				</p>
 
 			</div>
@@ -266,5 +301,36 @@
 	</div>
 
 	<script src="js/index.js"></script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-90861913-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
+
+    <!-- Hotjar Tracking Code for https://www.carlostoxtli.com -->
+    <script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:1453768,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+    
 </body>
 </html>
