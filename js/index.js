@@ -9,6 +9,7 @@ if (hash) {
 	document.getElementById('goBack').style.display = 'block';
 	document.getElementById('description').style.display = 'none';
 	//document.querySelector('.webvr-ui-button').click();
+	logVisit();
 } else {
 	document.getElementById('songSection').style.display = 'block';
 	document.getElementById('goBack').style.display = 'none';
@@ -173,6 +174,34 @@ $('#songsList').on('change', () => {
 		document.getElementById('selectSong').setAttribute('disabled', '1');
 	}
 });
+
+function logVisit() {
+	var hash = location.hash.substr(1);
+	var infoServer = 'https://httpbin.org/anything';
+	var logServer = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=log&q=';
+	try {
+		fetch(infoServer).then((response) => {
+		    return response.json();
+		}).then((data) => {
+			//console.log(data);
+		  	var params = [
+		  		(new Date()).getTime(),
+		  		hash.split(',')[0],
+		  		data.origin,
+		  		data.headers["Accept-Language"],
+		  		data.headers["User-Agent"]
+		  	]
+		  	logServer += encodeURIComponent(JSON.stringify(params));
+		  	fetch(logServer).then((r) => {
+		    	return r.text();
+		  	}).then((record) => {
+		  		//console.log(record);
+		  	});
+		});
+	} catch(e) {
+		//console.log(e);
+	}
+}
 
 // try {
 // 	if (DeviceMotionEvent) {
