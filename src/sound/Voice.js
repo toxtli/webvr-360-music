@@ -20,7 +20,7 @@ import AudioBuffer from 'Tone/core/Buffer'
 import BufferSource from 'Tone/source/BufferSource'
 import AudioBuffers from 'Tone/core/Buffers'
 import Tone from 'Tone/core/Tone'
-import {trackConfig, useVoiceOver, supported} from 'Config'
+import {trackConfig, useVoiceOver, supported, audioDirectory} from 'Config'
 
 export class Voice extends events.EventEmitter{
 	constructor(){
@@ -30,7 +30,7 @@ export class Voice extends events.EventEmitter{
 		this._hadErrorLoading = false
 
 		const voFolder = './audio/vo'
-		const voServer = 'https://3dyt.hcilab.ml/audio'
+		const voServer = audioDirectory
 
 		this._players = new Players().toMaster()
 		this._players.fadeOut = 0.5

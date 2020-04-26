@@ -18,6 +18,8 @@ import Tone from 'Tone/core/Tone'
 import Detector from 'three/examples/js/Detector'
 //import {GA} from 'utils/GA'
 
+//export const audioDirectory = 'audio'
+export const audioDirectory = 'https://3dyt.hcilab.ml/audio'
 export const unitsPerSecond = 7
 export const circleHeight = 0
 export const radius = 1.1

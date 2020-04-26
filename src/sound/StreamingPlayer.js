@@ -20,6 +20,7 @@ import Buffer from 'Tone/core/Buffer'
 import Tone from 'Tone/core/Tone'
 import Gain from 'Tone/core/Gain'
 import events from 'events'
+import {audioDirectory} from 'Config'
 
 //each segment is 30 seconds
 const SEG_TIME = 30
@@ -140,7 +141,7 @@ export class StreamingPlayer extends events.EventEmitter {
 
 	trackName(){
 		//let audioPath = './audio'
-		let audioPath = 'https://3dyt.hcilab.ml/audio'
+		let audioPath = audioDirectory
 		return `${audioPath}/${this.folder}/${this.track}-${this.segment}.[mp3|ogg]`
 	}
 
