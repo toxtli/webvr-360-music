@@ -11,6 +11,8 @@ server/credentials.json
 server/token.pickle
 audio/*
 
+package-lock.json
+
 # Logs
 logs
 *.log
