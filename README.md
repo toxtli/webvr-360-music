@@ -6,6 +6,10 @@ The audio of the available songs is not included in this repo. To add your own Y
 
 This is an Experiment, not a Google product.
 
+## Demo
+
+Try it now! [https://3dyt.hcilab.ml](https://3dyt.hcilab.ml)
+
 ## Technology
 
 Inside Music Youtube Edition is built with [aframe](https://aframe.io), [THREE.JS](https://threejs.org), [Tone.js](https://tonejs.github.io/), and [Spleeter](https://github.com/deezer/spleeter).
@@ -50,6 +54,49 @@ npm run restart
 
 The provided code reads the songs list from a public URL. If you want to test the tool in your local environment, you have to set the audioDirectory variable to 'audio' in the src/Config.js file.
 
+You have to install the requirements before executing the python script:
+
+```bash
+pip install -r requirements.txt
+```
+
+The script can be executed via command line arguments:
+
+```bash
+python app.py --url [YOUTUBE_VIDEO_URL]
+```
+
+or, via web:
+
+```bash
+python app.py --web
+```
+
+```bash
+curl http://localhost:4000/?url=[YOUTUBE_VIDEO_URL]
+```
+
+Examples:
+
+```bash
+python app.py --url https://www.youtube.com/watch?v=cNAdtkSjSps
+```
+
+```bash
+curl http://localhost:4000/?url=https://www.youtube.com/watch?v=cNAdtkSjSps
+```
+
+After processing a song, you can play it in the web app by sending the video ID and the duration in seconds separated by comman in the URL hash as follows:
+
+```bash
+open http://localhost:8080/#[VIDEO_ID],[DURATION_IN_SECONDS]
+```
+
+Example:
+
+```bash
+open http://localhost:8080/#cNAdtkSjSps,351
+``` 
 
 ## LICENSE
 
