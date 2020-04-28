@@ -23,7 +23,7 @@ if (hash) {
 //}, 100);
 
 function playSong(vid) {
-	window.location.href = interfaceUrl + vid;
+	window.location.href = interfaceUrl + vid.substr(1);
 	location.reload();
 }
 
@@ -34,16 +34,18 @@ document.getElementById('sendButton').addEventListener('click', () => {
 		var urlArr = [youtubeUrl];
 		var email = document.getElementById('email').value;
 		if (email) {
+			document.getElementById('sendButton').setAttribute('disabled');
 			console.log('PROCESSING SONG');
 			urlArr.push(email);
 			//serverUrl += encodeURI(youtubeUrl);
 			serverUrl += encodeURIComponent(JSON.stringify(urlArr));
 			console.log(serverUrl);
 			fetch(serverUrl)
-				.then((response) => {
+			  .then((response) => {
 			    return response.json();
 			  })
 			  .then((data) => {
+			  		document.getElementById('sendButton').removeAttribute('disabled');
 					console.log(data);
 					if (data.status == 'OK') {
 						var songUrl = data.value;
