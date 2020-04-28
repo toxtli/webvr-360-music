@@ -34,7 +34,7 @@ document.getElementById('sendButton').addEventListener('click', () => {
 		var urlArr = [youtubeUrl];
 		var email = document.getElementById('email').value;
 		if (email) {
-			document.getElementById('sendButton').setAttribute('disabled');
+			document.getElementById('sendButton').setAttribute('disabled', '1');
 			console.log('PROCESSING SONG');
 			urlArr.push(email);
 			//serverUrl += encodeURI(youtubeUrl);
