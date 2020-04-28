@@ -1,4 +1,7 @@
-var serverUrl = 'https://3dyt.hcilab.ml';
+var interfaceUrl = '';
+//var serverUrl = '/';
+//var serverUrl = 'https://3dyt.hcilab.ml/';
+
 //setTimeout(()=>{
 let hash = location.hash.substr(1);
 if (hash) {
@@ -20,7 +23,7 @@ if (hash) {
 //}, 100);
 
 function playSong(vid) {
-	window.location.href = serverUrl + vid;
+	window.location.href = interfaceUrl + vid;
 	location.reload();
 }
 
@@ -61,7 +64,7 @@ document.getElementById('sendButton').addEventListener('click', () => {
 document.getElementById('selectSong').addEventListener('click', () => {
 	var select = document.getElementById('songsList');
 	if (select.value) {
-		var hashUrl = serverUrl + '/#'+ select.value;
+		var hashUrl = interfaceUrl + '#'+ select.value;
 		window.location.href = hashUrl;
 		location.reload();
 	}
