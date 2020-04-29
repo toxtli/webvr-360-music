@@ -300,8 +300,6 @@ def upload_folder(dir_name):
 			os.remove(file_path)
 	else:
 		print('The folder already exists')
-	else:
-		print('The folder already exists')
 
 @app.route('/test', methods=['GET'])
 def test():
