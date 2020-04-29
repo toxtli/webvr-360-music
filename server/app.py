@@ -273,7 +273,7 @@ def folder_exists(service, dir_name):
 
 def upload_folder(dir_name):
 	print("UPLOADING_FILES")
-	folder = '../audio'
+	folder = 'audio'
 	folder_path = os.path.join(folder, dir_name)
 	service = google_login()
 	if not folder_exists(service, dir_name):
@@ -298,6 +298,8 @@ def upload_folder(dir_name):
                                     			fields='id').execute()
 			print(file_drive)
 			os.remove(file_path)
+	else:
+		print('The folder already exists')
 	else:
 		print('The folder already exists')
 
