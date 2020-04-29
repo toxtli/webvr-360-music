@@ -6,11 +6,14 @@ import random
 import string
 import logging
 import requests
+from flask_cors import CORS
 from threading import Thread
 from pydub import AudioSegment
 from urllib.parse import quote
 import urllib.parse as urlparse
+from flask import request,Flask
 from urllib.parse import parse_qs
+from multiprocessing import Process
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from google.auth.transport.requests import Request
