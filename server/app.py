@@ -1,21 +1,13 @@
 import os
-import sys
 import json
-import glob
 import pafy
 import pickle
 import random
 import string
-import os.path
+import logging
 import requests
-import tempfile
-import argparse
-from flask_cors import CORS
-from os.path import basename
 from threading import Thread
-from dotenv import load_dotenv
 from pydub import AudioSegment
-from flask import Flask, request
 from urllib.parse import quote
 import urllib.parse as urlparse
 from urllib.parse import parse_qs
@@ -28,6 +20,10 @@ app = Flask(__name__)
 CORS(app)
 upload_to_drive = True
 store_in_catalog = True
+
+logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO, filename='static/log.txt', filemode='w')
+logging.info('DEPLOYING')
+
 #do not forget to have a .env file in this path with the environmental variables set.
 if upload_to_drive:
 	load_dotenv()
@@ -41,42 +37,95 @@ def song_processing_thread(paths):
 	thread.daemon = True
 	thread.start()
 
+def debug_text(text):
+	base_url = 'https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=debug&q='
+	base_url += quote(text, safe='~()*!.\'')
+	r = requests.get(base_url)
+
 def song_processing(paths):
-	os.system(f'youtube-dl -x --audio-format mp3 -o {paths["song_path"]} {paths["url"]}')
-	os.system(f'spleeter separate -i {paths["song_path"]} -p spleeter:5stems -o {paths["temp_dir"]}')
-	duration = split_song(paths["temp_path"], paths["out_path"])
-	output = store_metadata(paths["url"], paths["out_path"])
-	os.system(f'mv {paths["song_path"]} {paths["out_path"]}/{paths["song_name"]}')
-	os.system(f'rm -fr {paths["temp_path"]}')
-	if upload_to_drive:
-		upload_folder(paths["name"])
-	if 'url_webhook' in paths:
-		paths['url_webhook'] += '&o=' + quote(output)
-		r = requests.get(paths['url_webhook'])
-		print(r.text)
-	if 'url_email' in paths:
-		email_params = [paths['email'], output]
-		paths['url_email'] += quote(json.dumps(email_params))
-		r = requests.get(paths['url_email'])
-		print(r.text)
+	output = ''
+	debug = open('debug.txt', 'w')
+	logging.info(f'DOWNLOADING {paths["name"]}')
+	youtube_dl_cmd = f'youtube-dl -x --audio-format mp3 -o {paths["song_path"]} "{paths["url"]}"'
+	debug_text(youtube_dl_cmd)
+	logging.info(youtube_dl_cmd)
+	os.system(youtube_dl_cmd)
+	if os.path.exists(paths["song_path"]):
+		logging.info(f'SPLEETER {paths["name"]}')
+		os.system(f'spleeter separate -i {paths["song_path"]} -p spleeter:5stems -o {paths["temp_dir"]}')
+		logging.info(f'SPLITING {paths["name"]}')
+		duration = split_song(paths["temp_path"], paths["out_path"])
+		logging.info(f'METADATA {paths["name"]}')
+		output = store_metadata(paths["url"], paths["out_path"])
+		logging.info(output)
+		os.system(f'mv {paths["song_path"]} {paths["out_path"]}/{paths["song_name"]}')
+		os.system(f'rm -fr {paths["temp_path"]}')
+		if upload_to_drive:
+			logging.info(f'UPLOADING {paths["name"]}')
+			upload_folder(paths["name"])
+			logging.info(f'UPLOADED {paths["name"]}')
+		if 'url_webhook' in paths:
+			logging.info(f'WEBHOOK {paths["name"]}')
+			paths['url_webhook'] += '&o=' + quote(output, safe='~()*!.\'')
+			logging.info(paths['url_webhook'])
+			r = requests.get(paths['url_webhook'])
+			logging.info(r.text)
+			print(r.text)
+		if 'url_email' in paths:
+			logging.info(f'EMAIL {paths["name"]}')
+			email_params = [paths['email'], output]
+			paths['url_email'] += quote(json.dumps(email_params), safe='~()*!.\'')
+			logging.info(paths['url_email'])
+			r = requests.get(paths['url_email'])
+			logging.info(r.text)
+			print(r.text)
+		r = requests.get("https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=status&q=DONE")
+	else:
+		if 'url_webhook' in paths:
+			logging.info(f'ERROR WEBHOOK {paths["name"]}')
+			paths['url_webhook'] += '&o='
+			logging.info(paths['url_webhook'])
+			r = requests.get(paths['url_webhook'])
+			logging.info(r.text)
+			print(r.text)
+		if 'url_email' in paths:
+			logging.info(f'ERROR EMAIL {paths["name"]}')
+			email_params = [paths['email'], '']
+			paths['url_email'] += quote(json.dumps(email_params), safe='~()*!.\'')
+			logging.info(paths['url_email'])
+			r = requests.get(paths['url_email'])
+			logging.info(r.text)
+			print(r.text)
+		logging.info(f'DONE {paths["name"]}')
+		r = requests.get("https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=status&q=ERROR")
+		logging.info(r.text)
 	return output
+
+def get_video_id(url):
+	vid_id = ''
+	parsed = urlparse.urlparse(url)
+	params = parse_qs(parsed.query)
+	if 'v' in params:
+		vid_id = params['v'][0]
+	elif 'youtu.be' in url:
+		vid_id = url.split('/')[-1]
+	return vid_id
 
 def main(args):
 	url = args['url']
 	# if args['nodrive']:
 	# 	upload_to_drive = False
 	paths = {}
-	parsed = urlparse.urlparse(url)
-	params = parse_qs(parsed.query)
-	if 'v' in params:
-		name = params['v'][0]
+	vid_id = get_video_id(url)
+	if vid_id:
+		name = vid_id
 		output = ""
 		paths["url"] = args['url']
 		paths["name"] = name
 		paths["song_name"] = "_song.mp3"
 		paths["song_dir"] = "songs"
 		paths["temp_dir"] = "processed"
-		paths["out_dir"] = "../audio"
+		paths["out_dir"] = "audio"
 		paths["song_path"] = f'{paths["song_dir"]}/{paths["name"]}.mp3'
 		paths["temp_path"] = f'{paths["temp_dir"]}/{paths["name"]}'
 		paths["out_path"] = f'{paths["out_dir"]}/{paths["name"]}'
@@ -84,9 +133,26 @@ def main(args):
 		if not os.path.exists(paths["song_dir"]):
 			os.system(f'mkdir {paths["song_dir"]}')
 			os.system(f'mkdir {paths["temp_dir"]}')
+			os.system(f'mkdir {paths["out_dir"]}')
 		if not os.path.exists(paths["out_song"]):
 			if 'webhook' in args and args['webhook'] is not None:
 				paths['url_webhook'] = args['webhook']
+				url_parts = paths['url_webhook'].split('?')
+				if len(url_parts) > 1:
+					url_base = f'{url_parts[0]}?'
+					parsed = urlparse.urlparse(paths['url_webhook'])
+					params = parse_qs(parsed.query)
+					comma = ''
+					for param in params:
+						logging.info(f'WEBHOOK PARAMS {param} {params[param][0]}')
+						if param in ['a','q','o']:
+							quoted = quote(params[param][0], safe='~()*!.\'')
+							url_base += f'{comma}{param}={quoted}'
+						else:
+							url_base += quote(f'{comma}{param}={params[param][0]}', safe='~()*!.\'')
+						comma = '&'
+					paths["url_webhook"] = url_base
+					logging.info(f'WEBHOOK URL {paths["name"]} {paths["url_webhook"]}')
 				song_processing_thread(paths)
 				output = f'/#{paths["name"]},60'
 				return {'status':'WAITING', 'value':output}
@@ -102,6 +168,7 @@ def main(args):
 		else:
 			duration = get_duration(paths["out_path"])
 			output = f'/#{paths["name"]},{duration}'
+			r = requests.get("https://script.google.com/macros/s/AKfycbxsr0Wtr7AaLILm-4cgZ0zgUfPd7ln1VS9j5GRTVWcFSOzoVG4/exec?a=status&q=DONE")
 		return {'status':'OK', 'value':output}
 	return {'status':'ERROR', 'value':'The video ID is missing'}
 
@@ -238,9 +305,17 @@ def upload_folder(dir_name):
 def test():
   return '{"status":"OK"}'
 
+@app.route('/log')
+def log():
+    file = open('static/log.txt', 'r')
+    content = file.read()
+    content = content.replace('\n','<br>')
+    return content
+
 @app.route('/', methods=['GET'])
 def index():
 	if request.args:
+		r = requests.get(CATALOG_SERVER + "?a=status&q=SERVING")
 		result = main(request.args)
 		print(result)
 		return json.dumps(result)
