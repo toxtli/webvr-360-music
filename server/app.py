@@ -9,6 +9,7 @@ import requests
 from flask_cors import CORS
 from threading import Thread
 from pydub import AudioSegment
+from dotenv import load_dotenv
 from urllib.parse import quote
 import urllib.parse as urlparse
 from flask import request,Flask
