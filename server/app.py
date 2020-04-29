@@ -51,7 +51,7 @@ def song_processing(paths):
 	output = ''
 	debug = open('debug.txt', 'w')
 	logging.info(f'DOWNLOADING {paths["name"]}')
-	youtube_dl_cmd = f'youtube-dl -x --audio-format mp3 -o {paths["song_path"]} "{paths["url"]}"'
+	youtube_dl_cmd = f'youtube-dl -x --audio-format mp3 -o {paths["song_path"]} "' + paths["url"] + '"'
 	debug_text(youtube_dl_cmd)
 	logging.info(youtube_dl_cmd)
 	os.system(youtube_dl_cmd)
