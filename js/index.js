@@ -34,17 +34,19 @@ document.getElementById('sendButton').addEventListener('click', () => {
 		var urlArr = [youtubeUrl];
 		var email = document.getElementById('email').value;
 		if (email) {
+			document.getElementById("sendButton").innerHTML = '...';
 			document.getElementById('sendButton').setAttribute('disabled', '1');
 			console.log('PROCESSING SONG');
 			urlArr.push(email);
 			//serverUrl += encodeURI(youtubeUrl);
 			serverUrl += encodeURIComponent(JSON.stringify(urlArr));
-			console.log(serverUrl);
+			//console.log(serverUrl);
 			fetch(serverUrl)
 			  .then((response) => {
 			    return response.json();
 			  })
 			  .then((data) => {
+			  		document.getElementById("sendButton").innerHTML = 'CONVERT';
 			  		document.getElementById('sendButton').removeAttribute('disabled');
 					console.log(data);
 					if (data.status == 'OK') {
