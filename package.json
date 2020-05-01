@@ -15,7 +15,7 @@
   "author": "Yotam Mann & Kyle Phillips",
   "license": "Apache-2.0",
   "devDependencies": {
-    "aframe": "^0.6.1",
+    "aframe": "^0.8.2",
     "autoprefixer-loader": "^3.2.0",
     "babel-core": "^6.23.1",
     "babel-loader": "^6.3.0",
@@ -35,7 +35,7 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^3.12.0",
-    "webvr-polyfill": "^0.9.25"
+    "webvr-polyfill": "^0.10.10"
   },
   "dependencies": {
     "@ekolabs/aframe-spritesheet-component": "^1.2.0",
