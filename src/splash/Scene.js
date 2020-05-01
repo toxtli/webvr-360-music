@@ -46,7 +46,7 @@ export class SplashScene {
 
         const scene = new THREE.Scene()
         const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.001, 10000)
-        camera.position.set(0, 0, 0)
+        camera.position.set(0, -10, 0)
         camera.lookAt(new THREE.Vector3(0, 0, 0))
         const renderer = new THREE.WebGLRenderer({canvas})
         renderer.setClearColor(0x00, 1)
