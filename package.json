@@ -15,7 +15,7 @@
   "author": "Yotam Mann & Kyle Phillips",
   "license": "Apache-2.0",
   "devDependencies": {
-    "aframe": "^0.8.2",
+    "aframe": "^0.6.1",
     "autoprefixer-loader": "^3.2.0",
     "babel-core": "^6.23.1",
     "babel-loader": "^6.3.0",
