@@ -1,7 +1,7 @@
 {
-  "name": "inside-music",
-  "version": "1.0.0",
-  "description": "Song Exploder VR is a WebVRExperiment that lets you step inside a song, giving you a closer look at how music is made.",
+  "name": "inside-music-youtube",
+  "version": "0.1.0",
+  "description": "Inside Music Youtube Edition is a WebVRExperiment that lets you step inside a song, giving you a closer look at how music is made.",
   "main": "index.html",
   "scripts": {
     "watch": "webpack -w",
@@ -12,7 +12,7 @@
     "deploy": "npm run predeploy && ghpages git@github.com:toxtli/webvr-360-music.git -p .ghpages && rm -rf .ghpages",
     "predeploy": "npm run build && shx mkdir -p .ghpages && cp -r index.html build js css images audio CNAME .ghpages"
   },
-  "author": "Yotam Mann & Kyle Phillips",
+  "author": "Yotam Mann & Kyle Phillips & Carlos Toxtli",
   "license": "Apache-2.0",
   "devDependencies": {
     "aframe": "^0.8.2",

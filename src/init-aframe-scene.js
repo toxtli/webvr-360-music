@@ -39,7 +39,7 @@ export default function initASceneController(){
 		document.querySelector('a-scene').classList.add('is360');
 	});
 
-	document.querySelector('a-entity[camera]').setAttribute('position', '0 1 0');
+	document.querySelector('a-entity[camera]').setAttribute('position', '0 1.1 0');
 
 	// sceneEl.addEventListener('enter-360', cFact.start360.bind(cFact));
 	// sceneEl.addEventListener('enter-vr',  cFact.startVR.bind(cFact));
