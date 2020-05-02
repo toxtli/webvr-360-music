@@ -35,7 +35,7 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^3.12.0",
-    "webvr-polyfill": "^0.9.25"
+    "webvr-polyfill": "^0.10.10"
   },
   "dependencies": {
     "@ekolabs/aframe-spritesheet-component": "^1.2.0",
@@ -50,7 +50,7 @@
     "exports-loader": "^0.6.4",
     "shader-loader": "^1.3.0",
     "startaudiocontext": "^1.2.0",
-    "three": "^0.84.0",
+    "three": "^0.96.0",
     "tinycolor2": "^1.4.1",
     "tone": "git://github.com/Tonejs/Tone.js.git#bf52df2fdc2ea8c99b73985413b001308ef2835f",
     "tween.js": "^16.6.0",
