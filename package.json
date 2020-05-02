@@ -35,7 +35,7 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^3.12.0",
-    "webvr-polyfill": "^0.10.10"
+    "webvr-polyfill": "^0.9.25"
   },
   "dependencies": {
     "@ekolabs/aframe-spritesheet-component": "^1.2.0",
