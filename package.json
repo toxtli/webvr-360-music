@@ -1,7 +1,7 @@
 {
-  "name": "inside-music-youtube",
-  "version": "0.1.0",
-  "description": "Inside Music Youtube Edition is a WebVRExperiment that lets you step inside a song, giving you a closer look at how music is made.",
+  "name": "inside-music",
+  "version": "1.0.0",
+  "description": "Song Exploder VR is a WebVRExperiment that lets you step inside a song, giving you a closer look at how music is made.",
   "main": "index.html",
   "scripts": {
     "watch": "webpack -w",
@@ -12,7 +12,7 @@
     "deploy": "npm run predeploy && ghpages git@github.com:toxtli/webvr-360-music.git -p .ghpages && rm -rf .ghpages",
     "predeploy": "npm run build && shx mkdir -p .ghpages && cp -r index.html build js css images audio CNAME .ghpages"
   },
-  "author": "Yotam Mann & Kyle Phillips & Carlos Toxtli",
+  "author": "Yotam Mann & Kyle Phillips",
   "license": "Apache-2.0",
   "devDependencies": {
     "aframe": "^0.8.2",
@@ -35,7 +35,7 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^3.12.0",
-    "webvr-polyfill": "^0.10.10"
+    "webvr-polyfill": "^0.9.25"
   },
   "dependencies": {
     "@ekolabs/aframe-spritesheet-component": "^1.2.0",
@@ -50,7 +50,7 @@
     "exports-loader": "^0.6.4",
     "shader-loader": "^1.3.0",
     "startaudiocontext": "^1.2.0",
-    "three": "^0.96.0",
+    "three": "^0.84.0",
     "tinycolor2": "^1.4.1",
     "tone": "git://github.com/Tonejs/Tone.js.git#bf52df2fdc2ea8c99b73985413b001308ef2835f",
     "tween.js": "^16.6.0",
