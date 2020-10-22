@@ -77,7 +77,7 @@ export default function initSplash(container=document.body){
         const enter360 = document.createElement('button');
         enter360.classList.add('webvr-ui-button');
         enter360.style.color = 'white';
-        enter360.innerHTML = `<div class="webvr-ui-title" style="padding: 0;">BROWSER MODE</div>`;
+        enter360.innerHTML = `<div class="webvr-ui-title" style="padding: 0;">BROWSER-MODE</div>`;
         enterVRContainer.appendChild(enter360);
         enter360.addEventListener('click', onEnter360);
         tryItIn360.style.display = 'none';
@@ -195,7 +195,7 @@ export default function initSplash(container=document.body){
                     enterVRButton.setTitle('VR MODE'.toUpperCase());
                 } else if (isTablet() || (enterVRButton.state || '').indexOf('error') >= 0) {
                     console.log('enterVRButton.isTablet')
-                    document.querySelector('.webvr-ui-title').innerHTML = '<img src="./images/360_icon.svg"><span>BROWSER MODE</span>';
+                    document.querySelector('.webvr-ui-title').innerHTML = '<img src="./images/360_icon.svg"><span>BROWSER-MODE</span>';
                     document.querySelector('.webvr-ui-title').classList.add('mode360')
                 }
             };
