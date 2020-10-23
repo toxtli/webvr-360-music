@@ -55,6 +55,7 @@ AFRAME.registerComponent('tracks', {
 			track.setAttribute('sound-rings', '');
 			this.el.appendChild(track);
 		}
+		window.tracksObj = this.tracks;
 
 		//clear the artist when the song ends
 		this.el.sceneEl.addEventListener('song-end', () =>

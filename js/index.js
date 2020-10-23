@@ -209,6 +209,13 @@ function logVisit() {
 	}
 }
 
+function moveTrackPosition(el, x, y, z) {
+	threedObj[el].position.x = x;
+	threedObj[el].position.y = y;
+	threedObj[el].position.z = z;
+	pannersObj[el].setPosition(x, y, z);
+}
+
 // try {
 // 	if (DeviceMotionEvent) {
 // 		if (typeof DeviceMotionEvent.requestPermission === 'function') {

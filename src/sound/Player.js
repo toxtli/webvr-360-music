@@ -101,7 +101,21 @@ AFRAME.registerComponent('player', {
 		const matrixWorld = this.el.object3D.matrixWorld
 		const position = new THREE.Vector3().setFromMatrixPosition(matrixWorld)
 
+		if (window.pannersObj == undefined) {
+			window.pannersObj = [];
+		}
+
+		if (window.threedObj == undefined) {
+			window.threedObj = [];
+		}
+
+		window.threedObj.push(this.el.object3D);
+
 		this._panner.setPosition(position.x, position.y, position.z)
+		window.pannersObj.push(this._panner);
+		
+		console.log('AUDIO_POSITION')	
+		console.log(position)
 
 		if (this._player){
 			this._player.dispose()
