@@ -209,11 +209,118 @@ function logVisit() {
 	}
 }
 
+var instrumentsDict = {
+	'other': 0,
+	'piano': 1,
+	'drums': 2,
+	'voice': 4,
+	'bass': 6
+}
+
 function moveTrackPosition(el, x, y, z) {
 	threedObj[el].position.x = x;
 	threedObj[el].position.y = y;
 	threedObj[el].position.z = z;
-	pannersObj[el].setPosition(x, y, z);
+	const position = new THREE.Vector3().setFromMatrixPosition(threedObj[el].matrixWorld)
+	pannersObj[el].setPosition(position.x, position.y, position.z);
+}
+
+function moveTrackName(name, x, y, z) {
+	var el = instrumentsDict[name];
+	threedObj[el].position.x = x;
+	threedObj[el].position.y = y;
+	threedObj[el].position.z = z;
+	const position = new THREE.Vector3().setFromMatrixPosition(threedObj[el].matrixWorld)
+	pannersObj[el].setPosition(position.x, position.y, position.z);
+}
+
+function animateTrackPosition(el, steps, timing, field, increase) {
+	if (steps > 0) {
+		setTimeout(
+			()=>{
+				threedObj[el].position[field] += increase;
+				const position = new THREE.Vector3().setFromMatrixPosition(threedObj[el].matrixWorld)
+				pannersObj[el].setPosition(position.x, position.y, position.z);
+				animateTrackPosition(el, --steps, timing, field, increase)
+			},
+			timing
+		);
+	}
+}
+
+function animateTrackName(name, steps, timing, field, increase) {
+	if (steps > 0) {
+		setTimeout(
+			()=>{
+				var el = instrumentsDict[name];
+				threedObj[el].position[field] += increase;
+				const position = new THREE.Vector3().setFromMatrixPosition(threedObj[el].matrixWorld)
+				pannersObj[el].setPosition(position.x, position.y, position.z);
+				animateTrackPosition(el, --steps, timing, field, increase)
+			},
+			timing
+		);
+	}
+}
+
+function circuleTrackName(name) {
+	setTimeout(
+		()=>{
+			var time = Date.now() * 0.0005;
+			var el = instrumentsDict[name];
+			var obj = threedObj[el];
+			obj.position.x = Math.cos( time );
+			obj.position.y = 1;
+			obj.position.z = Math.sin( time );
+			const position = new THREE.Vector3().setFromMatrixPosition(obj.matrixWorld)
+			pannersObj[el].setPosition(position.x, position.y, position.z);
+			circuleTrackName(name);
+		},
+		100
+	);
+}
+
+function circuleDelTrackName(name, delay) {
+	setTimeout(
+		()=>{
+			var time = Date.now() * 0.0005;
+			time = time - delay;
+			var el = instrumentsDict[name];
+			var obj = threedObj[el];
+			obj.position.x = Math.cos( time );
+			obj.position.y = 1;
+			obj.position.z = Math.sin( time );
+			const position = new THREE.Vector3().setFromMatrixPosition(obj.matrixWorld)
+			pannersObj[el].setPosition(position.x, position.y, position.z);
+			circuleDelTrackName(name, delay);
+		},
+		100
+	);
+}
+
+function transformSong() {
+	circuleDelTrackName('voice', 0);
+	circuleDelTrackName('bass', 1000);
+	circuleDelTrackName('drums', 2000);
+	circuleDelTrackName('piano', 3000);
+	circuleDelTrackName('other', 4000);
+}
+
+function circuleRevTrackName(name) {
+	setTimeout(
+		()=>{
+			var time = Date.now() * 0.0005;
+			var el = instrumentsDict[name];
+			var obj = threedObj[el];
+			obj.position.x = Math.sin( time );
+			obj.position.y = 1;
+			obj.position.z = Math.cos( time );
+			const position = new THREE.Vector3().setFromMatrixPosition(obj.matrixWorld)
+			pannersObj[el].setPosition(position.x, position.y, position.z);
+			circuleRevTrackName(name);
+		},
+		100
+	);
 }
 
 // try {
