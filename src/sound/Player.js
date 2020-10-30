@@ -44,9 +44,10 @@ AFRAME.registerComponent('player', {
 		this.system.players.push(this)
 
 		this._panner = new Panner3D({
-			rolloffFactor : 1.25,
+			//rolloffFactor : 1.25,
+			panningModel : 'HRTF'
 			/*panningModel : this.el.sceneEl.isMobile ? 'equalpower' : 'HRTF'*/
-			panningModel : 'equalpower'
+			//panningModel : 'equalpower'
 		}).toMaster()
 
 		this._rms = 0

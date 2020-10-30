@@ -280,6 +280,46 @@ function circuleTrackName(name) {
 	);
 }
 
+function setCoord(obj, varName, varValue, time, distance, gap) {
+	if (typeof varValue == 'string') {
+		if (varValue == 'cos') {
+			obj.position[varName] = (Math.cos( time ) * distance) + gap;
+		} else {
+			obj.position[varName] = (Math.sin( time ) * distance) + gap;
+		}
+	} else {
+		obj.position[varName] = varValue;
+	}
+	return obj;
+}
+
+function transformSong() {
+	//circleCusTrackName('voice', 1000, 0.0  , 'cos','sin',1.0, 0.5, 0.0005);
+	circleCusTrackName('voice', 1000, 'sin', 'cos', 1.0, 2.5, 0.0, 0.0005);
+	circleCusTrackName('bass',  3000, 'cos', 'sin', 0.2, 2.0, 0.0, 0.0005);
+	circleCusTrackName('drums', 0,    'cos', 'sin', 0.2, 2.0, 0.0, 0.0005);
+	circleCusTrackName('piano', 4000, 'cos', 'sin', 1.9, 1.5, 0.0, 0.0005);
+	circleCusTrackName('other', 2000, 'cos', 'sin', 1.9, 1.5, 0.0, 0.0005);
+}
+
+function circleCusTrackName(name, delay=0, xPos='cos', yPos='sin', zPos=1, distance=2, gap=0, speed=0.0005) {
+	setTimeout(
+		()=>{
+			var time = Date.now() * speed;
+			time = time - delay;
+			var el = instrumentsDict[name];
+			var obj = threedObj[el];
+			obj = setCoord(obj, 'x', xPos, time, distance, gap);
+			obj = setCoord(obj, 'z', yPos, time, distance, gap);
+			obj = setCoord(obj, 'y', zPos, time, distance, gap);
+			const position = new THREE.Vector3().setFromMatrixPosition(obj.matrixWorld)
+			pannersObj[el].setPosition(position.x, position.y, position.z);
+			circleCusTrackName(name, delay, xPos, yPos, zPos, distance, gap, speed)
+		},
+		100
+	);
+}
+
 function circuleDelTrackName(name, delay) {
 	setTimeout(
 		()=>{
@@ -287,23 +327,18 @@ function circuleDelTrackName(name, delay) {
 			time = time - delay;
 			var el = instrumentsDict[name];
 			var obj = threedObj[el];
-			obj.position.x = Math.cos( time );
-			obj.position.y = 1;
-			obj.position.z = Math.sin( time );
+			obj.position.x = Math.cos( time ) * 2;
+			obj.position.y = Math.cos( time ) + 1;
+			obj.position.z = Math.sin( time ) * 2;
+			// obj.position.x = Math.cos( time );
+			// obj.position.y = 1;
+			// obj.position.z = Math.sin( time );
 			const position = new THREE.Vector3().setFromMatrixPosition(obj.matrixWorld)
 			pannersObj[el].setPosition(position.x, position.y, position.z);
 			circuleDelTrackName(name, delay);
 		},
 		100
 	);
-}
-
-function transformSong() {
-	circuleDelTrackName('voice', 0);
-	circuleDelTrackName('bass', 1000);
-	circuleDelTrackName('drums', 2000);
-	circuleDelTrackName('piano', 3000);
-	circuleDelTrackName('other', 4000);
 }
 
 function circuleRevTrackName(name) {
