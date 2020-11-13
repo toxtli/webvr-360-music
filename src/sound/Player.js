@@ -19,6 +19,7 @@ import Meter from 'Tone/component/Meter'
 import Gain from 'Tone/core/Gain'
 import Analyser from 'Tone/component/Analyser'
 import Panner3D from 'Tone/component/Panner3D'
+import EQ3 from 'tone/Tone/component/EQ3'
 import Transport from 'Tone/core/Transport'
 import './Loading'
 import './Listener'
@@ -45,7 +46,9 @@ AFRAME.registerComponent('player', {
 
 		this._panner = new Panner3D({
 			//rolloffFactor : 1.25,
-			panningModel : 'HRTF'
+			panningModel : 'HRTF',
+			coneOuterAngle : 360,
+			coneInnerAngle : 360
 			/*panningModel : this.el.sceneEl.isMobile ? 'equalpower' : 'HRTF'*/
 			//panningModel : 'equalpower'
 		}).toMaster()
@@ -54,7 +57,11 @@ AFRAME.registerComponent('player', {
 
 		this._amplitudeArray = new Float32Array(64)
 
-		this._boost = new Gain().connect(this._panner)
+		this._boosteq = new Gain().connect(this._panner)
+
+		this._eq = new EQ3(5, 0, 10).connect(this._boosteq)
+
+		this._boost = new Gain().connect(this._eq)
 
 		this._level = new Gain().connect(this._boost)
 
@@ -106,6 +113,10 @@ AFRAME.registerComponent('player', {
 			window.pannersObj = [];
 		}
 
+		if (window.eqsObj == undefined) {
+			window.eqsObj = [];
+		}
+
 		if (window.threedObj == undefined) {
 			window.threedObj = [];
 		}
@@ -114,6 +125,7 @@ AFRAME.registerComponent('player', {
 
 		this._panner.setPosition(position.x, position.y, position.z)
 		window.pannersObj.push(this._panner);
+		window.eqsObj.push(this._eq);
 		
 		console.log('AUDIO_POSITION')	
 		console.log(position)

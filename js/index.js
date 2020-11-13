@@ -295,26 +295,32 @@ function setCoord(obj, varName, varValue, time, distance, gap) {
 
 function transformSong() {
 	//circleCusTrackName('voice', 1000, 0.0  , 'cos','sin',1.0, 0.5, 0.0005);
-	circleCusTrackName('voice', 1000, 'sin', 'cos', 1.0, 2.5, 0.0, 0.0005);
-	circleCusTrackName('bass',  3000, 'cos', 'sin', 0.2, 2.0, 0.0, 0.0005);
-	circleCusTrackName('drums', 0,    'cos', 'sin', 0.2, 2.0, 0.0, 0.0005);
-	circleCusTrackName('piano', 4000, 'cos', 'sin', 1.9, 1.5, 0.0, 0.0005);
-	circleCusTrackName('other', 2000, 'cos', 'sin', 1.9, 1.5, 0.0, 0.0005);
+	circleCusTrackName('voice', 1000, 'sin', 'cos', 1.0, 2.5, 0.0, 0.0005, 5, 0, 10);
+	circleCusTrackName('bass',  3000, 'cos', 'sin', 0.2, 2.0, 0.0, 0.0005, 5, 0, 10);
+	circleCusTrackName('drums', 0,    'cos', 'sin', 0.2, 2.0, 0.0, 0.0005, 5, 0, 10);
+	circleCusTrackName('piano', 4000, 'cos', 'sin', 1.9, 1.5, 0.0, 0.0005, 5, 0, 10);
+	circleCusTrackName('other', 2000, 'cos', 'sin', 1.9, 1.5, 0.0, 0.0005, 5, 0, 10);
 }
 
-function circleCusTrackName(name, delay=0, xPos='cos', yPos='sin', zPos=1, distance=2, gap=0, speed=0.0005) {
+function circleCusTrackName(name, delay=0, xPos='cos', yPos='sin', zPos=1, distance=2, gap=0, speed=0.0005, lowFreq=0, midFreq=0, highFreq=0, first=true) {
 	setTimeout(
 		()=>{
 			var time = Date.now() * speed;
 			time = time - delay;
 			var el = instrumentsDict[name];
+			if (first) {
+				var eq = eqsObj[el];
+				eq.low = lowFreq;
+				eq.mid = midFreq;
+				eq.high = highFreq;
+			}
 			var obj = threedObj[el];
 			obj = setCoord(obj, 'x', xPos, time, distance, gap);
 			obj = setCoord(obj, 'z', yPos, time, distance, gap);
 			obj = setCoord(obj, 'y', zPos, time, distance, gap);
 			const position = new THREE.Vector3().setFromMatrixPosition(obj.matrixWorld)
 			pannersObj[el].setPosition(position.x, position.y, position.z);
-			circleCusTrackName(name, delay, xPos, yPos, zPos, distance, gap, speed)
+			circleCusTrackName(name, delay, xPos, yPos, zPos, distance, gap, speed, lowFreq, midFreq, highFreq, false)
 		},
 		100
 	);
