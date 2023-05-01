@@ -7,7 +7,7 @@ Jinja2
 Werkzeug
 
 # app.py: 10
-Flask == 1.0.2
+Flask == 2.3.2
 
 # app.py: 9
 # split.py: 1
